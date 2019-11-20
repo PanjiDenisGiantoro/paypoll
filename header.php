@@ -10,7 +10,7 @@
     <meta name="keywords" content="au theme template">
 
     <!-- Title Page-->
-    <title>Dashboard 2</title>
+    <title>PAYROLL</title>
 
     <!-- Fontfaces CSS-->
     <link href="assets/css/font-face.css" rel="stylesheet" media="all">
@@ -30,9 +30,20 @@
     <link href="assets/vendor/select2/select2.min.css" rel="stylesheet" media="all">
     <link href="assets/vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
     <link href="assets/vendor/vector-map/jqvmap.min.css" rel="stylesheet" media="all">
-
+    <!-- Jquery calender -->
+    <script src="datepicker/js/bootstrap-datepicker.js"></script>
+    <link rel="stylesheet" href="datepicker/css/datepicker.css">
+    <script>
+        $(function datepicker() {
+        $('#datepicker').datepicker({
+        autoclose: true
+    });
+    });
+    </script>
+   
     <!-- Main CSS-->
     <link href="assets/css/theme.css" rel="stylesheet" media="all">
+   
 
 </head>
 
@@ -92,23 +103,23 @@
                         </li>
                         <li class="has-sub">
                             <a class="js-arrow" href="#">
-                                <i class="fas fa-trophy"></i>Features
+                                <i class="fas fa-trophy"></i>Master
                                 <span class="arrow">
                                     <i class="fas fa-angle-down"></i>
                                 </span>
                             </a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
-                                    <a href="table.html">
-                                        <i class="fas fa-table"></i>Tables</a>
+                                    <a href="karyawan.php">
+                                        <i class="fas fa-table"></i>Karyawan</a>
                                 </li>
                                 <li>
-                                    <a href="form.html">
-                                        <i class="far fa-check-square"></i>Forms</a>
+                                    <a href="Jabatan.php">
+                                        <i class="far fa-check-square"></i>Jabatan</a>
                                 </li>
                                 <li>
-                                    <a href="calendar.html">
-                                        <i class="fas fa-calendar-alt"></i>Calendar</a>
+                                    <a href="Status.php">
+                                        <i class="fas fa-calendar-alt"></i>Status</a>
                                 </li>
                                 <li>
                                     <a href="map.html">
@@ -118,37 +129,34 @@
                         </li>
                         <li class="has-sub">
                             <a class="js-arrow" href="#">
-                                <i class="fas fa-copy"></i>Pages
+                                <i class="fas fa-copy"></i>Kehadiran
                                 <span class="arrow">
                                     <i class="fas fa-angle-down"></i>
                                 </span>
                             </a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
-                                    <a href="login.html">
-                                        <i class="fas fa-sign-in-alt"></i>Login</a>
+                                    <a href="">
+                                        <i class="fas fa-sign-in-alt"></i>kehadiran</a>
                                 </li>
                                 <li>
-                                    <a href="register.html">
-                                        <i class="fas fa-user"></i>Register</a>
+                                    <a href="absensi.php">
+                                        <i class="fas fa-user"></i>absensi</a>
                                 </li>
-                                <li>
-                                    <a href="forget-pass.html">
-                                        <i class="fas fa-unlock-alt"></i>Forget Password</a>
-                                </li>
+                              
                             </ul>
                         </li>
                         <li class="has-sub">
                             <a class="js-arrow" href="#">
-                                <i class="fas fa-desktop"></i>UI Elements
+                                <i class="fas fa-desktop"></i>Potongan
                                 <span class="arrow">
                                     <i class="fas fa-angle-down"></i>
                                 </span>
                             </a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
-                                    <a href="button.html">
-                                        <i class="fab fa-flickr"></i>Button</a>
+                                    <a href="kasbon.php">
+                                        <i class="fab fa-flickr"></i>Kasbon</a>
                                 </li>
                                 <li>
                                     <a href="badge.html">
@@ -460,132 +468,3 @@
                 </div>
             </aside>
             <!-- END HEADER DESKTOP-->
-
-            <!-- BREADCRUMB-->
-            <section class="au-breadcrumb m-t-75">
-                <div class="section__content section__content--p30">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="au-breadcrumb-content">
-                                    <div class="au-breadcrumb-left">
-                                        <span class="au-breadcrumb-span">You are here:</span>
-                                        <ul class="list-unstyled list-inline au-breadcrumb__list">
-                                            <li class="list-inline-item active">
-                                                <a href="#">Home</a>
-                                            </li>
-                                            <li class="list-inline-item seprate">
-                                                <span>/</span>
-                                            </li>
-                                            <li class="list-inline-item">Dashboard</li>
-                                        </ul>
-                                    </div>
-                                    <button class="au-btn au-btn-icon au-btn--green">
-                                        <i class="zmdi zmdi-plus"></i>add item</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <!-- END BREADCRUMB-->
-
-            <!-- STATISTIC-->
-            <section class="statistic">
-                <div class="section__content section__content--p30">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-6 col-lg-3">
-                                <div class="statistic__item">
-                                    <h2 class="number">10,368</h2>
-                                    <span class="desc">members online</span>
-                                    <div class="icon">
-                                        <i class="zmdi zmdi-account-o"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-lg-3">
-                                <div class="statistic__item">
-                                    <h2 class="number">388,688</h2>
-                                    <span class="desc">items sold</span>
-                                    <div class="icon">
-                                        <i class="zmdi zmdi-shopping-cart"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-lg-3">
-                                <div class="statistic__item">
-                                    <h2 class="number">1,086</h2>
-                                    <span class="desc">this week</span>
-                                    <div class="icon">
-                                        <i class="zmdi zmdi-calendar-note"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-lg-3">
-                                <div class="statistic__item">
-                                    <h2 class="number">$1,060,386</h2>
-                                    <span class="desc">total earnings</span>
-                                    <div class="icon">
-                                        <i class="zmdi zmdi-money"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <!-- END STATISTIC-->
-
-
-
-           
-
-            <section>
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="copyright">
-                                <p>Copyright © 2019 Team </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <!-- END PAGE CONTAINER-->
-        </div>
-
-    </div>
-
-    <!-- Jquery JS-->
-    <script src="assets/vendor/jquery-3.2.1.min.js"></script>
-    <!-- Bootstrap JS-->
-    <script src="assets/vendor/bootstrap-4.1/popper.min.js"></script>
-    <script src="assets/vendor/bootstrap-4.1/bootstrap.min.js"></script>
-    <!-- Vendor JS       -->
-    <script src="assets/vendor/slick/slick.min.js">
-    </script>
-    <script src="assets/vendor/wow/wow.min.js"></script>
-    <script src="assets/vendor/animsition/animsition.min.js"></script>
-    <script src="assets/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js">
-    </script>
-    <script src="assets/vendor/counter-up/jquery.waypoints.min.js"></script>
-    <script src="assets/vendor/counter-up/jquery.counterup.min.js">
-    </script>
-    <script src="assets/vendor/circle-progress/circle-progress.min.js"></script>
-    <script src="assets/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
-    <script src="assets/vendor/chartjs/Chart.bundle.min.js"></script>
-    <script src="assets/vendor/select2/select2.min.js">
-    </script>
-    <script src="assets/vendor/vector-map/jquery.vmap.js"></script>
-    <script src="assets/vendor/vector-map/jquery.vmap.min.js"></script>
-    <script src="assets/vendor/vector-map/jquery.vmap.sampledata.js"></script>
-    <script src="assets/vendor/vector-map/jquery.vmap.world.js"></script>
-
-    <!-- Main JS-->
-    <script src="assets/js/main.js"></script>
-
-</body>
-
-</html>
-<!-- end document-->
