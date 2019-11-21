@@ -125,6 +125,7 @@ CREATE TABLE `head_gajis` (
 
 CREATE TABLE `karyawans` (
   `id` bigint(20) UNSIGNED NOT NULL,
+  `CardNumber` double DEFAULT NULL,
   `nama` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `jabatan` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
