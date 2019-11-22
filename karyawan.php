@@ -169,13 +169,13 @@ Peringatan<strong>Form Belum Lengkap</strong>
 <tr>
 <td>
 <div class="form-group">
-<label for="Id_Karyawan" class=" form-control-label">Id Karyawan</label>
+<label for="id" class=" form-control-label">Id Karyawan</label>
 <input type="text" value="<?php echo $kodeBarang; ?>" name="id" placeholder="Masukkan ID Karyawan" class="form-control"style="width: 400px" readonly>
 </div>
 </td>
 <td> 
 <div class="form-group">
-<label for="Nama_Karyawan" class=" form-control-label">Nama Karyawan</label>
+<label for="nama" class=" form-control-label">Nama Karyawan</label>
 <input type="text" name="nama" placeholder="Masukkan Nama Karyawan" class="form-control"style="width: 400px" >
 </div>
 </td>
