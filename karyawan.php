@@ -91,7 +91,7 @@ echo
 <a class='btn btn-danger btn-sm fa fa fa-eraser' href='aksi_karyawan.php?act=del&id=$d[id]'></a>
 </td>
 </tr>";
-$no;
+$no++;
 }
 ?>
 </table>
@@ -105,7 +105,8 @@ $no;
 
 <?php
 break;
-case "tambah";         
+case "tambah";  
+
 $query = "SELECT max(id) as id FROM karyawans";
 $hasil = mysqli_query($konek,$query);
 $data = mysqli_fetch_array($hasil);
@@ -263,8 +264,17 @@ Peringatan<strong>Form Belum Lengkap</strong>
 <?php
 break;
 case "edit";
+
 $sqlEdit = mysqli_query($konek,"select * from karyawans where id='$_GET[id]'");
 $e = mysqli_fetch_array($sqlEdit);
+$query = "SELECT max(id) as id FROM karyawans";
+$hasil = mysqli_query($konek,$query);
+$data = mysqli_fetch_array($hasil);
+$kodeBarang = $data['id'];
+$noUrut = (int) substr($kodeBarang, 3, 3);
+$noUrut++;
+$char = "K";
+$kodeBarang = $char . sprintf("%03s", $noUrut);
 ?>
 <section class="au-breadcrumb m-t-75">
 <div class="section__content section__content--p30">
