@@ -29,12 +29,9 @@
     <link href="assets/vendor/slick/slick.css" rel="stylesheet" media="all">
     <link href="assets/vendor/select2/select2.min.css" rel="stylesheet" media="all">
     <link href="assets/vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
-
     <!-- Main CSS-->
     <link href="assets/css/theme.css" rel="stylesheet" media="all">
-
 </head>
-
 <body class="animsition">
     <div class="page-wrapper">
         <div class="page-content--bge5">
@@ -46,30 +43,63 @@
                                 <img src="assets/images/icon/logo.png" alt="CoolAdmin">
                             </a>
                         </div>
+
+
                         <div class="login-form">
-                            <form action="" method="post">
+
+                            <?php
+                            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                                $user = $_POST['username'];
+                                $pass = $_POST['password'];
+                                $p = md5($pass);
+
+                                if($user == ''&& $pass==''){
+                                    ?>
+                                        <div class="alert alert-warning" role="alert">
+                                         Warning
+                                            <a href="#" class="alert-link">Password dan Username</a>belum diisi.
+                                        </div>
+                                    <?php
+                                }else{
+                                    include "koneksi/koneksi.php";
+                                    $sqllogin = mysqli_query($konek,"select * from admin where username='$user' and password='$p'");
+                                    $jml = mysqli_num_rows($sqllogin);
+                                    $d=mysqli_fetch_array($sqllogin);
+                                    if($jml >0 ){
+                                        session_start();
+                                        $_SESSION['login'] = TRUE;
+                                        $_SESSION['id'] = $d['idadmin'];
+                                        $_SESSION['username'] = $d['username'];
+                                        $_SESSION['namalengkap'] = $d['namalengkap'];
+
+                                        header('Location:./index.php');
+                                    }else{
+                                        ?>
+                                          <div class="alert alert-danger" role="alert">
+                                         Warning
+                                            <a href="#" class="alert-link">Password dan Username</a>Salah.
+                                        </div>
+
+                                        <?php 
+                                    }
+                                }
+
+                            }
+                            ?>
+                            <form action="" method="post" role="form">
                                 <div class="form-group">
-                                    <label>Email Address</label>
-                                    <input class="au-input au-input--full" type="email" name="email" placeholder="Email">
+                                    <label>Username</label>
+                                    <input class="au-input au-input--full" type="text" name="username" placeholder="username">
                                 </div>
                                 <div class="form-group">
                                     <label>Password</label>
                                     <input class="au-input au-input--full" type="password" name="password" placeholder="Password">
                                 </div>
-                                <div class="login-checkbox">
-                                    <label>
-                                        <input type="checkbox" name="remember">Remember Me
-                                    </label>
-                                    <label>
-                                        <a href="#">Forgotten Password?</a>
-                                    </label>
-                                </div>
-                                <button class="au-btn au-btn--block au-btn--green m-b-20" type="submit">sign in</button>
-                               
-                            </form>
+
+                             
+                                <button class="au-btn au-btn--block au-btn--green m-b-20" type="submit" value="login">Log In</button>
                             <div class="register-link">
                                 <p>
-                                    Don't you have account?
                                     <a href="#">Sign Up Here</a>
                                 </p>
                             </div>
@@ -78,9 +108,21 @@
                 </div>
             </div>
         </div>
-
     </div>
 
+    <!-- <script type="text/javascript">
+    function validasi() {
+        var username = document.getElementById("username").value;
+        var password = document.getElementById("password").value;       
+        if (username != "" && password!="") {
+            return true;
+        }else{
+            alert('Username dan Password harus di isi !');
+            return false;
+        }
+    }
+</script> -->
+    </script>
     <!-- Jquery JS-->
     <script src="assets/vendor/jquery-3.2.1.min.js"></script>
     <!-- Bootstrap JS-->
@@ -101,7 +143,6 @@
     <script src="assets/vendor/chartjs/Chart.bundle.min.js"></script>
     <script src="assets/vendor/select2/select2.min.js">
     </script>
-
     <!-- Main JS-->
     <script src="assets/js/main.js"></script>
 

@@ -1,3 +1,11 @@
+<?php
+session_start();
+if(!isset($_SESSION['login'])){
+    header('Location:login.php');
+}
+include "koneksi/koneksi.php";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,7 +18,7 @@
     <meta name="keywords" content="au theme template">
 
     <!-- Title Page-->
-    <title>PAYROLL</title>
+    <title>PAYPOLL</title>
 
     <!-- Fontfaces CSS-->
     <link href="assets/css/font-face.css" rel="stylesheet" media="all">
@@ -31,19 +39,10 @@
     <link href="assets/vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
     <link href="assets/vendor/vector-map/jqvmap.min.css" rel="stylesheet" media="all">
     <!-- Jquery calender -->
-    <script src="datepicker/js/bootstrap-datepicker.js"></script>
-    <link rel="stylesheet" href="datepicker/css/datepicker.css">
-    <script>
-        $(function datepicker() {
-        $('#datepicker').datepicker({
-        autoclose: true
-    });
-    });
-    </script>
-   
+    
     <!-- Main CSS-->
     <link href="assets/css/theme.css" rel="stylesheet" media="all">
-   
+  
 
 </head>
 
@@ -53,7 +52,7 @@
         <aside class="menu-sidebar2">
             <div class="logo">
                 <a href="#">
-                    <img src="assets/images/icon/logo-white.png" alt="Cool Admin" />
+                    <img src="assets/images/icon/logo-white.png" alt="PAYPOLL COOL" />
                 </a>
             </div>
             <div class="menu-sidebar2__content js-scrollbar1">
@@ -62,33 +61,30 @@
                         <img src="assets/images/icon/avatar-big-01.jpg" alt="John Doe" />
                     </div>
                     <h4 class="name">john doe</h4>
-                    <a href="#">Sign out</a>
+                    <a href="logout.php">Log out</a>
                 </div>
                 <nav class="navbar-sidebar2">
                     <ul class="list-unstyled navbar__list">
                         <li class="active has-sub">
                             <a class="js-arrow" href="#">
-                                <i class="fas fa-tachometer-alt"></i>Dashboard
+                                <i class="fas fa-tachometer-alt"></i>Tunjangan
                                 <span class="arrow">
                                     <i class="fas fa-angle-down"></i>
                                 </span>
                             </a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                 
                                 <li>
-                                    <a href="index.html">
-                                        <i class="fas fa-tachometer-alt"></i>Dashboard 1</a>
+                                    <a href="Jabatan.php">
+                                        <i class="far fa-check-square"></i>Gaji</a>
                                 </li>
                                 <li>
-                                    <a href="index2.html">
-                                        <i class="fas fa-tachometer-alt"></i>Dashboard 2</a>
+                                    <a href="Status.php">
+                                        <i class="fas fa-calendar-alt"></i>Tunjangan</a>
                                 </li>
                                 <li>
-                                    <a href="index3.html">
-                                        <i class="fas fa-tachometer-alt"></i>Dashboard 3</a>
-                                </li>
-                                <li>
-                                    <a href="index4.html">
-                                        <i class="fas fa-tachometer-alt"></i>Dashboard 4</a>
+                                    <a href="map.html">
+                                        <i class="fas fa-map-marker-alt"></i>Tunjangan Tambahan</a>
                                 </li>
                             </ul>
                         </li>
@@ -97,10 +93,6 @@
                                 <i class="fas fa-chart-bar"></i>Inbox</a>
                             <span class="inbox-num">3</span>
                         </li>
-                        <li>
-                            <a href="#">
-                                <i class="fas fa-shopping-basket"></i>eCommerce</a>
-                        </li>
                         <li class="has-sub">
                             <a class="js-arrow" href="#">
                                 <i class="fas fa-trophy"></i>Master
@@ -108,6 +100,7 @@
                                     <i class="fas fa-angle-down"></i>
                                 </span>
                             </a>
+                            
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
                                     <a href="karyawan.php">
@@ -121,10 +114,7 @@
                                     <a href="Status.php">
                                         <i class="fas fa-calendar-alt"></i>Status</a>
                                 </li>
-                                <li>
-                                    <a href="map.html">
-                                        <i class="fas fa-map-marker-alt"></i>Maps</a>
-                                </li>
+
                             </ul>
                         </li>
                         <li class="has-sub">
@@ -159,45 +149,18 @@
                                         <i class="fab fa-flickr"></i>Kasbon</a>
                                 </li>
                                 <li>
-                                    <a href="badge.html">
-                                        <i class="fas fa-comment-alt"></i>Badges</a>
+                                    <a href="pinjaman.php">
+                                        <i class="fas fa-comment-alt"></i>Pinjaman</a>
                                 </li>
                                 <li>
-                                    <a href="tab.html">
-                                        <i class="far fa-window-maximize"></i>Tabs</a>
+                                    <a href="lain.php">
+                                        <i class="far fa-window-maximize"></i>Lain-Lain</a>
                                 </li>
                                 <li>
-                                    <a href="card.html">
-                                        <i class="far fa-id-card"></i>Cards</a>
+                                    <a href="potongan.php">
+                                        <i class="far fa-id-card"></i>Potongan</a>
                                 </li>
-                                <li>
-                                    <a href="alert.html">
-                                        <i class="far fa-bell"></i>Alerts</a>
-                                </li>
-                                <li>
-                                    <a href="progress-bar.html">
-                                        <i class="fas fa-tasks"></i>Progress Bars</a>
-                                </li>
-                                <li>
-                                    <a href="modal.html">
-                                        <i class="far fa-window-restore"></i>Modals</a>
-                                </li>
-                                <li>
-                                    <a href="switch.html">
-                                        <i class="fas fa-toggle-on"></i>Switchs</a>
-                                </li>
-                                <li>
-                                    <a href="grid.html">
-                                        <i class="fas fa-th-large"></i>Grids</a>
-                                </li>
-                                <li>
-                                    <a href="fontawesome.html">
-                                        <i class="fab fa-font-awesome"></i>FontAwesome</a>
-                                </li>
-                                <li>
-                                    <a href="typo.html">
-                                        <i class="fas fa-font"></i>Typography</a>
-                                </li>
+                               
                             </ul>
                         </li>
                     </ul>
@@ -356,10 +319,6 @@
                                 <a href="inbox.html">
                                     <i class="fas fa-chart-bar"></i>Inbox</a>
                                 <span class="inbox-num">3</span>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i class="fas fa-shopping-basket"></i>eCommerce</a>
                             </li>
                             <li class="has-sub">
                                 <a class="js-arrow" href="#">

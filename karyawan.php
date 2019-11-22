@@ -3,88 +3,72 @@
     <br>
     <br>
 
-      <div class="row m-t-30">
-          <div class="card-body" style="margin-left: 890px  ">
-            <button type="button" class="btn btn-primary btn-sm">Tambah Karyawan</button>
+        <?php 
+        $view =isset($_GET['view']) ? $_GET['view'] :null;
+
+
+        switch ($view) {
+            default:
+            ?>
+            
+             <div class="row m-t-10">
+                <div class="col-md-12">
+                 <div class="table-responsive m-b-30">
+                <table style="width: 40%" class="table table-borderless table-data1" >
+                    <thead>
+                        <tr>
+                            <th align='center'>No</th>
+                            <th align='center'>Id</th>
+                            <th align='center'>Nama Karyawan</th>
+                            <th align='center'>Card Number</th>
+                            <th align='center'>Jabatan</th>
+                            <th align='center'>Status</th>
+                            <th align='center'>Tempat Jabatan</th>
+                            <th align='center'>Tanggal Masuk</th>
+                            <th align='center'>Tanggal Keluar</th>
+                            <th align='center'>BPJS Kesehatan</th>
+                            <th align='center'>BPJS Ketenagakerjaan</th>
+                            <th align='center'>Aksi</th>                                                                                                
+                        </tr>
+                         </thead>
+                        <?php
+                        $sql = mysqli_query($konek,"select * from karyawans ");
+                        $no=1;
+                        while($d= mysqli_fetch_array($sql)){
+                            echo 
+                            "<tr>
+                                <td width='40px' align='center'>$no</td>
+                                <td align='center'>$d[id]</td>
+                                <td align='center'>$d[nama]</td>
+                                <td align='center'>$d[CardNumber]</td>
+                                <td align='center'>$d[jabatan]</td>
+                                <td align='center'>$d[status]</td>
+                                <td align='center'>$d[tempatJabatan]</td>
+                                <td align='center'>$d[tglMasuk]</td>
+                                <td align='center'>$d[tglKeluar]</td>
+                                <td align='center'>$d[bpjsKes]</td>
+                                <td align='center'>$d[bpjsKet]</td>
+                                <td width='40px' align='center'>
+                                <a class='btn btn-warning btn-sm' href='karyawan.php?view=edit&id=$d[id]'>Edit</a>
+                                <a class='btn btn-warning btn-sm' href='karyawan.php?act=del&id=$d[id]'>Hapus</a>
+                                </td>
+                            </tr>";
+                            $no;
+                        }
+                        ?>
+                   
+                    <tbody>
+                 
+            </div>
         </div>
-                            <div class="col-md-12">
-                                <!-- DATA TABLE-->
-                                <div class="table-responsive m-b-40">
-                                    <table class="table table-borderless table-data3">
-                                        <thead>
-                                            <tr>
-                                                <th>Id Karyawan</th>
-                                                <th>Nama Karyawan</th>
-                                                <th>Jabatan</th>
-                                                <th>Tanggal Masuk</th>
-                                                <th>Tanggal Pengangkatan</th>
-                                                <th>Status</th>
-                                                <th>Aksi</th>                                                                                                
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>2018-09-29 05:57</td>
-                                                <td>Mobile</td>
-                                                <td>iPhone X 64Gb Grey</td>
-                                                <td class="process">Processed</td>
-                                                <td>$999.00</td>
-                                                 <td class="process">Processed</td>
-                                                <td>$999.00</td>
-                                            </tr>
-                                            <tr>
-                                                <td>2018-09-28 01:22</td>
-                                                <td>Mobile</td>
-                                                <td>Samsung S8 Black</td>
-                                                <td class="process">Processed</td>
-                                                <td>$756.00</td>
-                                                <td class="process">Processed</td>
-                                                <td>$999.00</td>
-                                            </tr>
-                                            <tr>
-                                                <td>2018-09-27 02:12</td>
-                                                <td>Game</td>
-                                                <td>Game Console Controller</td>
-                                                <td class="denied">Denied</td>
-                                                <td>$22.00</td>
-                                            </tr>
-                                            <tr>
-                                                <td>2018-09-26 23:06</td>
-                                                <td>Mobile</td>
-                                                <td>iPhone X 256Gb Black</td>
-                                                <td class="denied">Denied</td>
-                                                <td>$1199.00</td>
-                                            </tr>
-                                            <tr>
-                                                <td>2018-09-25 19:03</td>
-                                                <td>Accessories</td>
-                                                <td>USB 3.0 Cable</td>
-                                                <td class="process">Processed</td>
-                                                <td>$10.00</td>
-                                            </tr>
-                                            <tr>
-                                                <td>2018-09-29 05:57</td>
-                                                <td>Accesories</td>
-                                                <td>Smartwatch 4.0 LTE Wifi</td>
-                                                <td class="denied">Denied</td>
-                                                <td>$199.00</td>
-                                            </tr>
-                                            <tr>
-                                                <td>2018-09-24 19:10</td>
-                                                <td>Camera</td>
-                                                <td>Camera C430W 4k</td>
-                                                <td class="process">Processed</td>
-                                                <td>$699.00</td>
-                                            </tr>
-                                            <tr>
-                                                <td>2018-09-22 00:43</td>
-                                                <td>Computer</td>
-                                                <td>Macbook Pro Retina 2017</td>
-                                                <td class="process">Processed</td>
-                                                <td>$10.00</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+    </div>
+    </div>
+
+
+            <?php
+            
+        }
+        ?>
+        
                           
       <?php include"footer.php";?>
