@@ -203,8 +203,8 @@ Peringatan<strong>Form Belum Lengkap</strong>
 <label for="status" class=" form-control-label">Status</label>
 <select name="status"  class="form-control-sm form-control" style="width: 400px">
      <option value="0">Please select</option>
-     <option value="1">TETAP</option>
-     <option value="2">KONTRAK</option>
+     <option value="TETAP">TETAP</option>
+     <option value="KONTRAK">KONTRAK</option>
  </select>
 </div>
 </div>
@@ -326,12 +326,13 @@ $e = mysqli_fetch_array($sqlEdit);
 </div>
 </td>
 <td> 
+
 <div class="form-group">
 <label for="jabatan" class=" form-control-label">Jabatan</label>
 <select name="jabatan" class="form-control-sm form-control" style="width: 400px">
-     <option value="0">Please select</option>
-     <option value="OB">OB</option>
-     <option value="Guru">Guru</option>
+     <?php $jabatann = $e['jabatan']; ?>
+     <option <?php echo ($jabatann == 'OB') ? "selected": "" ?>>OB</option>
+     <option <?php echo ($jabatann == 'GURU') ? "selected": "" ?>>GURU</option>
  </select>
 </div>
 </td>
@@ -342,9 +343,10 @@ $e = mysqli_fetch_array($sqlEdit);
 <div class="form-group">
 <label for="status" class=" form-control-label">Status</label>
 <select name="status"  class="form-control-sm form-control" style="width: 400px">
-     <option value="0">Please select</option>
-     <option value="1">TETAP</option>
-     <option value="2">KONTRAK</option>
+   <?php $statuss = $e['status']; ?>
+     <option <?php echo ($statuss == 'TETAP') ? "selected": "" ?>>TETAP</option>
+     <option <?php echo ($statuss == 'KONTRAK') ? "selected": "" ?>>KONRAK</option>
+
  </select>
 </div>
 </div>
@@ -353,10 +355,10 @@ $e = mysqli_fetch_array($sqlEdit);
 <div class="form-group">
 <label for="tempatJabatan" class=" form-control-label">Tempat Jabatan</label>
 <select name="tempatJabatan"  class="form-control-sm form-control" style="width: 400px">
-     <option value="0">Please select</option>
-     <option value="SD">SD</option>
-     <option value="SMP">SMP</option>
-      <option value="SMA">SMA</option>
+     <?php $jab = $e['tempatJabatan']; ?>
+     <option <?php echo ($jab == 'SD') ? "selected": "" ?>>SD</option>
+     <option <?php echo ($jab == 'SMP') ? "selected": "" ?>>SMP</option>
+     <option <?php echo ($jab == 'SMA') ? "selected": "" ?>>SMA</option> 
  </select>
 </div>
 </td>
@@ -365,13 +367,13 @@ $e = mysqli_fetch_array($sqlEdit);
 <td>
 <div class="form-group">
 <label for="tglMasuk" class=" form-control-label">Tanggal Masuk</label>
-<input type="date" name="tglMasuk"  placeholder="Masukkan Tanggal Masuk Anda" class="form-control"style="width: 400px" >
+<input type="date" name="tglMasuk" value="<?php  echo $e['tglMasuk']?>"  placeholder="Masukkan Tanggal Masuk Anda" class="form-control"style="width: 400px" >
 </div>
 </td>
 <td>
 <div class="form-group">
 <label for="tglKeluar" class=" form-control-label">Tanggal Keluar</label>
-<input type="date" name="tglKeluar"  placeholder="Masukkan Tanggal Keluar Anda" class="form-control"style="width: 400px" >
+<input type="date" name="tglKeluar" value="<?php  echo $e['tglKeluar']?>" placeholder="Masukkan Tanggal Keluar Anda" class="form-control"style="width: 400px" >
 </div>
 </td>
 </tr>
