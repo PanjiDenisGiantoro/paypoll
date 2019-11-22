@@ -160,32 +160,37 @@ Peringatan<strong>Form Belum Lengkap</strong>
 <tr>
 <td>
 <div class="form-group">
-<label for="Id_Karyawan" class=" form-control-label">Id Absensi</label>
+<label for="id" class=" form-control-label">Id Absensi</label>
 <input type="text" value="<?php echo $kodeBarang; ?>" name="id" placeholder="Masukkan ID Absensi" class="form-control"style="width: 400px" readonly>
 </div>
 </td>
 <td> 
 <div class="form-group">
-<label for="Nama_Karyawan" class=" form-control-label">Nama Karyawan</label>
+<label for="nama" class=" form-control-label">Nama Karyawan</label>
 <input type="text" name="nama" placeholder="Masukkan Nama Karyawan" class="form-control"style="width: 400px" >
 </div>
 </td>
 </tr>
 <tr>
-<td>
-<div class="form-group">
-<label for="CardNumber" class=" form-control-label">Card Id</label>
-<input type="text" name="CardNumber"  placeholder="Masukkan Card Id Anda" class="form-control"style="width: 400px" >
-</div>
-</td>
+
 <td> 
 <div class="form-group">
-<label for="jabatan" class=" form-control-label">Jabatan</label>
-<select name="jabatan"  class="form-control-sm form-control" style="width: 400px">
+<label for="id" class=" form-control-label">Id Karyawan</label>
+<select name="id" id="id"  class="form-control-sm form-control" style="width: 400px"  onchange="changeValue(this.value)">
      <option value="0">Please select</option>
-     <option value="OB">OB</option>
-     <option value="Guru">Guru</option>
+    <?php
+    $result = mysql_query("SELECT b.id as id from karyawans a join absens b on a.id = b.idKaryawan");   
+    $jsArray = "var dtMhs = new Array();\n";       
+    while ($row = mysql_fetch_array($result)) {   
+        echo '<option value="' 
+        . $row['id'] . '">' . $row['id'] . '</option>';   
+        $jsArray 
+        .= "dtMhs['" . $row['id'] . "'] = {nama:'" . addslashes($row['nama']) 
+        . "',jabatan:'".addslashes($row['jabatan'])."'};\n";   
+    }     
+    ?>   
  </select>
+
 </div>
 </td>
 </tr>
@@ -214,32 +219,6 @@ Peringatan<strong>Form Belum Lengkap</strong>
 </td>
 </tr>
 <tr>
-<td>
-<div class="form-group">
-<label for="tglMasuk" class=" form-control-label">Tanggal Masuk</label>
-<input type="date" name="tglMasuk"  placeholder="Masukkan Tanggal Masuk Anda" class="form-control"style="width: 400px" >
-</div>
-</td>
-<td>
-<div class="form-group">
-<label for="tglKeluar" class=" form-control-label">Tanggal Keluar</label>
-<input type="date" name="tglKeluar"  placeholder="Masukkan Tanggal Keluar Anda" class="form-control"style="width: 400px" >
-</div>
-</td>
-</tr>
-<tr>
-<td>
-<div class="form-group">
-<label for="bpjsKes" class=" form-control-label">BPJS Kesehatan</label>
-<input type="number" name="bpjsKes"  placeholder="Masukkan bpjsKesesehatan Anda" class="form-control"style="width: 400px" >
-</div>
-</td>
-<td>
-<div class="form-group">
-<label for="bpjsKet" class=" form-control-label">BPJS Ketenagakerjaan</label>
-<input type="number" name="bpjsKet"  placeholder="Masukkan bpjs Ketenagakerjaan Anda" class="form-control"style="width: 400px ">
-</div>
-</td>
 </tr>
 </table>
 <div class="card-body">
@@ -405,5 +384,6 @@ $kodeBarang = $char . sprintf("%03s", $noUrut);
 break;
 }
 ?>
+
 <?php include"footer.php";?>
 
