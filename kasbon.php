@@ -1,182 +1,294 @@
-<?php include "header.php"; ?>
+<?php include"header.php";?>
 
-  <section class="au-breadcrumb m-t-75">
-                <div class="section__content section__content--p30">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="au-breadcrumb-content">
-                                    <div class="au-breadcrumb-left">
-                                        <span class="au-breadcrumb-span">You are here:</span>
-                                        <ul class="list-unstyled list-inline au-breadcrumb__list">
-                                            <li class="list-inline-item active">
-                                                <a href="#">Dashboard</a>
-                                            </li>
-                                            <li class="list-inline-item seprate">
-                                                <span>/</span>
-                                            </li>
-                                            <li class="list-inline-item">Kasbon Karyawan</li>
-                                        </ul>
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <br>
-            <div class="col-lg-11">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <strong>Kasbon</strong>
-                                        <small> Tambah</small>
-                                    </div>
-                                    <div style='margin-left:30px;'>
-                                    <div class="card-body card-block row">
-                                    	<form action="" method="post" class="form-horizontal">
-                                     <!--    <div class="form-group">
-                                            <label for="Id_Karyawan" class=" form-control-label">Company</label>
-                                            <input type="text" id="company" placeholder="Enter your company name" class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="vat" class=" form-control-label">VAT</label>
-                                            <input type="text" id="vat" placeholder="DE1234567890" class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="street" class=" form-control-label">Street</label>
-                                            <input type="text" id="street" placeholder="Enter street name" class="form-control">
-                                        </div>
-                                        <div class="row form-group">
-                                            <div class="col-8">
-                                                <div class="form-group">
-                                                    <label for="city" class=" form-control-label">City</label>
-                                                    <input type="text" id="city" placeholder="Enter your city" class="form-control">
-                                                </div>
-                                            </div>
-                                            <div class="col-8">
-                                                <div class="form-group">
-                                                    <label for="postal-code" class=" form-control-label">Postal Code</label>
-                                                    <input type="text" id="postal-code" placeholder="Postal Code" class="form-control">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="country" class=" form-control-label">Country</label>
-                                            <input type="text" id="country" placeholder="Country name" class="form-control">
-                                        </div> -->
-                                    </div>
-                                    <table  width="900px">
-                                    	<tr>
-                                    		<td>
-	                                    	<div class="form-group">
-	                                            <label for="Id_kasbon" class=" form-control-label">Id Kasbon</label>
-	                                            <input type="text" id="Id_kasbon" placeholder="Masukkan ID kasbon" class="form-control"style="width: 400px">
-                                        	</div>
-
-                                   			</td>
-                                       		
-                                        </tr>
-                                        <tr>
-                                        	<td>
-	                                    	<div class="form-group">
-	                                            <label for="Nama_karyawan" class=" form-control-label">Nama Karyawan</label>
-	                                            <input type="text" id="Nama_karyawan"  placeholder="Masukkan Nama Karyawan Anda" class="form-control"style="width: 400px" >
-	                                               
-                                        	</div>
-                                        </td>
-                                   		
-                                        </tr>
-                                        <tr>
-                                        	<td>
-	                                    	<div class="form-group">
-	                                            <label for="Tanggal_kasbon" class=" form-control-label">Tanggal Kasbon</label>
-	                                            <input type="text" id="Tanggal_kasbon"  placeholder="Masukkan Tanggal Kasbon" class="form-control"style="width: 400px" >
-	                                               
-                                        	</div>
-                                        </td>
-                                   		
-                                        </tr>
-                                        <tr>
-                                        	<td>
-	                                    	<div class="form-group">
-	                                            <label for="Nama_Keterangan" class=" form-control-label">Keterangan</label>
-	                                            <input type="text" id="Nama_Keterangan"  placeholder="Masukkan Keterangan" class="form-control"style="width: 400px" >
-	                                               
-                                        	</div>
-                                        </td>
-                                   		
-                                        </tr>
-                                     
-                                    </table>
-                                     <div class="card-body">
-                                        <button type="button" class="btn btn-primary btn-sm">Simpan</button>
-                                        <button type="button" class="btn btn-danger btn-sm">Keluar</button>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </form>
-                    </div>
-                       <div class="row m-t-30">
-        </div>
-                            <div class="col-md-12">
-                                <!-- DATA TABLE-->
-                                <div class="table-responsive m-b-40">
-                                    <table class="table table-borderless table-data3">
-                                        <thead>
-                                            <tr>
-                                                <th>Id Jabatan</th>
-                                                <th>Nama Jabatan</th>
-                                               
-                                                <th>Aksi</th>                                                                                                
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>2018-09-29 05:57</td>
-                                                <td>Mobile</td>
-                                                <td>iPhone X 64Gb Grey</td>
-                                               
-                                            </tr>
-                                            <tr>
-                                                <td>2018-09-28 01:22</td>
-                                                <td>Mobile</td>
-                                                <td>Samsung S8 Black</td>
-                                                
-                                            </tr>
-                                            <tr>
-                                                <td>2018-09-27 02:12</td>
-                                                <td>Game</td>
-                                              	<td>Samsung S8 Black</td>
-                                            </tr>
-                                            <tr>
-                                                <td>2018-09-26 23:06</td>
-                                                <td>Mobile</td>
-                                              	<td>Samsung S8 Black</td>
-                                            </tr>
-                                            <tr>
-                                                <td>2018-09-25 19:03</td>
-                                                <td>Accessories</td>
-                                               	<td>Samsung S8 Black</td>
-                                            </tr>
-                                            <tr>
-                                                <td>2018-09-29 05:57</td>
-                                                <td>Accesories</td>
-                                                <td>Smartwatch 4.0 LTE Wifi</td>
-                                              
-                                            </tr>
-                                            <tr>
-                                                <td>2018-09-24 19:10</td>
-                                                <td>Camera</td>
-                                                <td>Camera C430W 4k</td>
-                                               
-                                            </tr>
-                                          
-                                        </tbody>
-                                    </table>
-                                </div>
+<br/>
+<br/>
+<br/>
 
 
-<?php include "footer.php"; ?>
-													
+<?php 
+$view =isset($_GET['view']) ? $_GET['view'] :null;
+
+
+switch ($view) {
+default:
+?>
+<!-- menampilkan pesan -->
+
+
+<div class="row m-t-8">
+
+<div class="col-md-12">
+<div class="table-responsive m-b-50">
+
+
+<style type="text/css">
+th{
+font-size: 12px;
+text-align: center;s
+}
+td{
+font-size: 12px;
+}
+</style>
+<div class="card-body" >
+ <?php
+if(isset($_GET['e']) && $_GET['e']=='sukses'){
+?>
+<div class="alert alert-success" role="alert" style="margin-top: 30px">
+Selamat <strong>Proses Berhasil</strong>
+</div>
+
+<?php
+}else if(isset($_GET['e']) && $_GET['e']=='gagal'){
+?>
+<div class="alert alert-danger" role="alert"  style="margin-top: 30px">
+Error <strong>Proses Gagal</strong>
+</div>
+
+<?php
+}
+?>
+<a href="kasbon.php?view=tambah" class="btn btn-primary" style="float: right; margin-right: 30px ; margin-top: 40px" >Tambah Data kasbon Karyawan</a>
+<table  class="table " >
+</div>
+<thead>
+<tr>
+<th align='center'>No</th>
+<th align='center'>Id Karyawan</th>
+<th align='center'>Nama Karyawan</th>
+<th align='center'>Jumlah Kasbon</th>
+<th align='center'>Tanggal Absen</th>
+<th align='center'>Keterangan</th>
+<th align='center' style="width: 100px;">Aksi</th>                                                                                    
+</tr>
+</thead>
+<?php
+$sql = mysqli_query($konek,"SELECT a.nama AS nama,b.idKaryawan AS idKaryawan,b.keterangan AS keterangan,a.id AS id,b.tgl AS tgl,b.`jumlahKasbon` AS `jumlahKasbon` FROM karyawans a JOIN kasbons b ON a.id = b.idKaryawan");
+$no=1;
+while($d= mysqli_fetch_array($sql)){
+echo 
+"<tr>
+<td width='40px' align='center'>$no</td>
+<td align='center'>$d[idKaryawan]</td>
+<td align='center'>$d[nama]</td>
+<td align='center'>$d[jumlahKasbon]</td>
+<td align='center'>$d[keterangan]</td>
+<td align='center'>$d[tgl]</td>
+<td width='40px' align='center'>
+<a class='btn btn-warning btn-sm fa fa-edit' href='kasbon.php?view=edit&id=$d[id]' ></a>
+<a class='btn btn-danger btn-sm fa fa fa-eraser' href='aksi_kasbon.php?act=del&id=$d[id]'></a>
+</td>
+</tr>";
+$no++;
+}
+?>
+</table>
+<tbody>
+</div>
+</div>
+</div>
+</div>
+<?php
+break;
+case "tambah";  
+
+?>
+<?php
+if(isset($_GET['e']) && $_GET['e']=='bl'){
+ ?>
+<div class="alert alert-danger" role="alert">
+Peringatan<strong>Form Belum Lengkap</strong>
+</div>
+ <?php
+}
+?>
+<section class="au-breadcrumb m-t-75">
+<div class="section__content section__content--p30">
+<div class="container-fluid">
+<div class="row">
+<div class="col-md-12">
+<div class="au-breadcrumb-content">
+<div class="au-breadcrumb-left">
+<span class="au-breadcrumb-span">You are here:</span>
+<ul class="list-unstyled list-inline au-breadcrumb__list">
+<li class="list-inline-item active">
+<a href="#">Dashboard</a>
+</li>
+<li class="list-inline-item seprate">
+<span>/</span>
+</li>
+<li class="list-inline-item">Tambah Kasbon</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<br>
+<div class="col-lg-11">
+<div class="card">
+<div class="card-header">
+<strong>kasbon</strong>
+<small> Tambah</small>
+</div>
+<div style='margin-left:30px;'>
+<div class="card-body card-block row">
+<form method="post" action="aksi_kasbon.php?act=insert" class="form-horizontal">
+</div>
+    <table  width="900px">
+      <tr>
+        <td>
+            <div class="form-group">
+                <label for="idKaryawan" class=" form-control-label">Id Karyawan</label>
+            <select name="idKaryawan" id="idKaryawan" class=" form-control" onchange="changeValue(this.value)" style="width: 400px" >
+        <option value=0>-Pilih-</option>
+         <?php
+         $konek = mysqli_connect("localhost","root","","payrol");
+    $result = mysqli_query($konek,"SELECT * from karyawans");   
+    $jsArray = "var dtMhs = new Array();\n";       
+    while ($row = mysqli_fetch_array($result)) {   
+        echo '<option value="'.$row['id'].'">'.$row['id'].'</option>';   
+        $jsArray .= "dtMhs['".$row['id']."'] = {nama:'".addslashes($row['nama'])."'};\n";   
+    }     
+    ?>   
+        </select>
+    </td>
+    <td>
+         <div class="form-group">
+  <label for="id" class=" form-control-label">Nama Karyawan</label>
+      <input type="text" name="nama" id="nama" class="form-control"style="width: 400px"/>
+    </td>
+      </tr>
+      <tr>
+       <td>
+        <div class="form-group">
+  <label for="jumlahKasbon" class=" form-control-label">jumlah Kasbon</label>
+      <input type="number" name="jumlahKasbon" id="jumlahKasbon" class="form-control"style="width: 400px"/></td>
+       <td>
+        <div class="form-group">
+        <label for="TanggalKasbon" class=" form-control-label">Tanggal Kasbon</label>
+        <input type="date"name="TanggalKasbon" id="TanggalKasbon"  class="form-control" style="width: 400px"/>
+        </td>
+    </div>
+      </tr>
+      <tr>
+      <tr>
+          <td>
+                  <label for="keeterangan" class="form-control-label">Keterangan</label>
+                  <textarea rows="5" class="form-control" id="keterangan" name="keterangan" style="width: 400px">
+                  </textarea>
+          </td>
+      </tr>
+    </table>
+      <script type="text/javascript">   
+    <?php echo $jsArray; ?> 
+    function changeValue(id){ 
+    document.getElementById('nama').value = dtMhs[id].nama;
+    }; 
+    </script>
+<div class="card-body">
+<input type="submit" class="btn btn-primary" value="simpan">
+<a class="btn btn-danger" href="kasobn.php">kembali</a>
+</div>
+</div>
+</div>
+</form>
+</div>
+<?php
+break;
+case "edit";
+$sqlEdit = mysqli_query($konek,"select * from kasbons a join karyawans b on a.idKaryawan = b.id where a.idKaryawan='$_GET[id]'");
+$e = mysqli_fetch_array($sqlEdit);
+$query = "SELECT max(id) as id FROM karyawans";
+$hasil = mysqli_query($konek,$query);
+$data = mysqli_fetch_array($hasil);
+$kodeBarang = $data['id'];
+$noUrut = (int) substr($kodeBarang, 3, 3);
+$noUrut++;
+$char = "K";
+$kodeBarang = $char . sprintf("%03s", $noUrut);
+?>
+<section class="au-breadcrumb m-t-75">
+<div class="section__content section__content--p30">
+<div class="container-fluid">
+<div class="row">
+<div class="col-md-12">
+<div class="au-breadcrumb-content">
+<div class="au-breadcrumb-left">
+<span class="au-breadcrumb-span">You are here:</span>
+<ul class="list-unstyled list-inline au-breadcrumb__list">
+<li class="list-inline-item active">
+<a href="#">Dashboard</a>
+</li>
+<li class="list-inline-item seprate">
+<span>/</span>
+</li>
+<li class="list-inline-item">Edit Absensi Karyawan</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<br>
+<div class="col-lg-11">
+<div class="card">
+<div class="card-header">
+<strong>Karyawan</strong>
+<small> edit</small>
+</div>
+<div style='margin-left:30px;'>
+<div class="card-body card-block row">
+<form action="aksi_kasbon.php?act=update" method="post" class="form-horizontal">
+</div>
+  <table  width="900px">
+       <tr>
+        <td>
+            <div class="form-group">
+                <label for="idKaryawan" class=" form-control-label">Id Karyawan</label>
+           <input type="text" name="idKaryawan" id="idKaryawan" value="<?php echo $e['idKaryawan']?>" class="form-control"style="width: 400px"/>
+    </td>
+    <td>
+         <div class="form-group">
+  <label for="id" class=" form-control-label">Nama Karyawan</label>
+      <input type="text" name="nama" id="nama" value="<?php echo $e['nama']?>" class="form-control"style="width: 400px"/>
+    </td>
+      </tr>
+      <tr>
+       <td>
+        <div class="form-group">
+  <label for="jumlahKasbon" class=" form-control-label">jumlah Kasbon</label>
+      <input type="number" name="jumlahKasbon" id="jumlahKasbon" value="<?php echo $e['jumlahKasbon']?>" class="form-control"style="width: 400px"/></td>
+       <td>
+        <div class="form-group">
+        <label for="TanggalKasbon" class=" form-control-label">Tanggal Kasbon</label>
+        <input type="date"name="TanggalKasbon" id="TanggalKasbon" value="<?php echo $e['tgl']?>" class="form-control" style="width: 400px"/>
+        </td>
+    </div>
+     
+      <tr>
+          <td>
+              <label for="keterangan" class="form-control-label">Keterangan</label>
+              <textarea rows="5" class="form-control" id="keterangan" name="keterangan" style="width: 400px"><?php echo $e['keterangan']?>
+              </textarea>
+          </td>
+      </tr>
+    </table>
+<div class="card-body">
+<input type="submit" class="btn btn-primary" value="simpan">
+<a class="btn btn-danger" href="absensi.php">kembali</a>
+</div>
+</div>
+</div>
+</form>
+</div>
+<?php
+break;
+}
+?>
+<?php include"footer.php";?>
+
