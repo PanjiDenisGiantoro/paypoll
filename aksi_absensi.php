@@ -12,10 +12,12 @@ if($_GET['act'] =='insert'){
 	$idKaryawan = $_POST['idKaryawan'];
 	$tglAbsen = $_POST['tglAbsen'];
 	$keterangan = $_POST['keterangan'];
-	if($id==''|| $idKaryawan==''||$tglAbsen==''||$keterangan==''){
+	if( $idKaryawan==''||$tglAbsen==''||$keterangan==''){
+	
+
 		header('location:absensi.php?view=tambah&e=bl');
 	}else{
-		$simpan = mysqli_query($konek,"insert into absens(id,idKaryawan,tglAbsen,keterangan) values ('$id','$idKaryawan','$tglAbsen','$keterangan')");
+		$simpan = mysqli_query($konek,"insert into absens(idKaryawan,tglAbsen,keterangan) values ('$idKaryawan','$tglAbsen','$keterangan')");
 
 		if($simpan){
 			header('location:absensi.php?e=sukses');
@@ -49,6 +51,7 @@ else if ($_GET['act'] == 'del'){
 
 	if($hapus){
 		// echo var_dump("delete from absens where idKaryawan = '$_GET[id]'");die();
+
 		header('location:absensi.php?e=sukses');
 	}else{
 		header('location:absensi.php?e=gagal');

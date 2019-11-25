@@ -151,7 +151,7 @@ Peringatan<strong>Form Belum Lengkap</strong>
       <tr>
         <td>
             <div class="form-group">
-                <label for="id" class=" form-control-label">Id Karyawan</label>
+                <label for="idKaryawan" class=" form-control-label">Id Karyawan</label>
             <select name="idKaryawan" id="idKaryawan" class=" form-control" onchange="changeValue(this.value)" style="width: 400px" >
         <option value=0>-Pilih-</option>
          <?php
@@ -176,7 +176,7 @@ Peringatan<strong>Form Belum Lengkap</strong>
       <tr>
         <td>
         <div class="form-group">
-  <label for="id" class=" form-control-label">Nama Karyawan</label>
+  <label for="nama" class=" form-control-label">Nama Karyawan</label>
       <input type="text" name="nama" id="nama" class="form-control"style="width: 400px"/></td>
        <td>
         <div class="form-group">
