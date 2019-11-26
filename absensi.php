@@ -168,7 +168,7 @@ Peringatan<strong>Form Belum Lengkap</strong>
     <td>
 <div class="form-group">
 <label for="tglAbsen" class=" form-control-label">Tanggal Absen</label>
-<input type="date" name="tglAbsen"  placeholder="Masukkan Tanggal Absen Anda" class="form-control"style="width: 400px" >
+<input type="date" name="tglAbsen"  placeholder="Masukkan Tanggal Absen Anda" value="<?php echo date('Y-m-d') ?>" class="form-control"style="width: 400px" >
 </div>
 </td>
    

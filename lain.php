@@ -165,7 +165,7 @@ Peringatan<strong>Form Belum Lengkap</strong>
        <td>
         <div class="form-group">
         <label for="tgl" class=" form-control-label">Tanggal Potongan lain lain</label>
-        <input type="date"name="tgl" id="tgl"  class="form-control" style="width: 400px"/>
+        <input type="date"name="tgl" id="tgl"  class="form-control"  value="<?php echo date('Y-m-d') ?>" style="width: 400px"/>
         </td>
     </div>
       </tr>

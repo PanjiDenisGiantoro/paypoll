@@ -57,8 +57,8 @@ Error <strong>Proses Gagal</strong>
 <th align='center'>Id Karyawan</th>
 <th align='center'>Nama Karyawan</th>
 <th align='center'>Jumlah Kasbon</th>
-<th align='center'>Tanggal Absen</th>
 <th align='center'>Keterangan</th>
+<th align='center'>Tanggal Absen</th>
 <th align='center' style="width: 100px;">Aksi</th>                                                                                    
 </tr>
 </thead>
@@ -92,8 +92,11 @@ $no++;
 break;
 case "tambah";  
 
+
 ?>
 <?php
+
+
 if(isset($_GET['e']) && $_GET['e']=='bl'){
  ?>
 <div class="alert alert-danger" role="alert">
@@ -101,6 +104,7 @@ Peringatan<strong>Form Belum Lengkap</strong>
 </div>
  <?php
 }
+
 ?>
 <section class="au-breadcrumb m-t-75">
 <div class="section__content section__content--p30">
@@ -169,14 +173,14 @@ Peringatan<strong>Form Belum Lengkap</strong>
        <td>
         <div class="form-group">
         <label for="TanggalKasbon" class=" form-control-label">Tanggal Kasbon</label>
-        <input type="date"name="TanggalKasbon" id="TanggalKasbon"  class="form-control" style="width: 400px"/>
+        <input type="date"name="TanggalKasbon" id="TanggalKasbon" value="<?php echo date('Y-m-d') ?>" class="form-control" style="width: 400px"/>
         </td>
     </div>
       </tr>
       <tr>
       <tr>
           <td>
-                  <label for="keeterangan" class="form-control-label">Keterangan</label>
+                  <label for="keterangan" class="form-control-label">Keterangan</label>
                   <textarea rows="5" class="form-control" id="keterangan" name="keterangan" style="width: 400px">
                   </textarea>
           </td>
@@ -190,7 +194,7 @@ Peringatan<strong>Form Belum Lengkap</strong>
     </script>
 <div class="card-body">
 <input type="submit" class="btn btn-primary" value="simpan">
-<a class="btn btn-danger" href="kasobn.php">kembali</a>
+<a class="btn btn-danger" href="kasbon.php">kembali</a>
 </div>
 </div>
 </div>
@@ -201,14 +205,14 @@ break;
 case "edit";
 $sqlEdit = mysqli_query($konek,"select * from kasbons a join karyawans b on a.idKaryawan = b.id where a.idKaryawan='$_GET[id]'");
 $e = mysqli_fetch_array($sqlEdit);
-$query = "SELECT max(id) as id FROM karyawans";
+$query = "SELECT max(id) as id FROM pinjamen";
 $hasil = mysqli_query($konek,$query);
 $data = mysqli_fetch_array($hasil);
 $kodeBarang = $data['id'];
 $noUrut = (int) substr($kodeBarang, 3, 3);
 $noUrut++;
 $char = "K";
-$kodeBarang = $char . sprintf("%03s", $noUrut);
+$kodeBarang = $noUrut;
 ?>
 <section class="au-breadcrumb m-t-75">
 <div class="section__content section__content--p30">
@@ -250,19 +254,19 @@ $kodeBarang = $char . sprintf("%03s", $noUrut);
         <td>
             <div class="form-group">
                 <label for="idKaryawan" class=" form-control-label">Id Karyawan</label>
-           <input type="text" name="idKaryawan" id="idKaryawan" value="<?php echo $e['idKaryawan']?>" class="form-control"style="width: 400px"/>
+           <input type="text" name="idKaryawan" id="idKaryawan" value="<?php echo $e['idKaryawan']?>" readonly class="form-control"style="width: 400px"/>
     </td>
     <td>
          <div class="form-group">
   <label for="id" class=" form-control-label">Nama Karyawan</label>
-      <input type="text" name="nama" id="nama" value="<?php echo $e['nama']?>" class="form-control"style="width: 400px"/>
+      <input type="text" name="nama" id="nama" value="<?php echo $e['nama']?>" class="form-control" readonly style="width: 400px"/>
     </td>
       </tr>
       <tr>
        <td>
         <div class="form-group">
   <label for="jumlahKasbon" class=" form-control-label">jumlah Kasbon</label>
-      <input type="number" name="jumlahKasbon" id="jumlahKasbon" value="<?php echo $e['jumlahKasbon']?>" class="form-control"style="width: 400px"/></td>
+      <input type="number" name="jumlahKasbon" id="jumlahKasbon" value="<?php echo $e['jumlahKasbon']?>"  class="form-control"style="width: 400px"/></td>
        <td>
         <div class="form-group">
         <label for="TanggalKasbon" class=" form-control-label">Tanggal Kasbon</label>
@@ -280,7 +284,7 @@ $kodeBarang = $char . sprintf("%03s", $noUrut);
     </table>
 <div class="card-body">
 <input type="submit" class="btn btn-primary" value="simpan">
-<a class="btn btn-danger" href="absensi.php">kembali</a>
+<a class="btn btn-danger" href="kasbon.php">kembali</a>
 </div>
 </div>
 </div>
