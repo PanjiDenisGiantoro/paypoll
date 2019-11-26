@@ -6,3 +6,7 @@ CREATE TABLE `jabatan` (
   `nama_jabatan` varchar(30) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1
+
+
+
+ALTER TABLE `payrol`.`tunjangans` ADD CONSTRAINT `tunjangans_id_jabatan_foreign` FOREIGN KEY (`id_jabatan`) REFERENCES `payrol`.`jabatan`(`id`) ON DELETE CASCADE; 
