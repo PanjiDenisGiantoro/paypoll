@@ -49,7 +49,7 @@ Error <strong>Proses Gagal</strong>
 }
 ?>
 <a href="karyawan.php?view=tambah" class="btn btn-primary" style="float: right; margin-right: 30px ; margin-top: 40px" >Tambah Data Karyawan</a>
-<table  class="table " >
+<table  class="table " border="0" >
 </div>
 <thead>
 <tr>
@@ -65,7 +65,7 @@ Error <strong>Proses Gagal</strong>
 <th align='center'>Tanggal Keluar</th>
 <th align='center'>BPJS Kesehatan</th>
 <th align='center'>BPJS Ketenagakerjaan</th>
-<th align='center' style="width: 100px;">Aksi</th>                                                                                                
+<th align='center' colspan="3" style="width: auto;">Aksi</th>                                                                                                
 </tr>
 </thead>
 
@@ -92,10 +92,10 @@ echo
 <td align='center'>$blm</td>
 <td align='center'>$d[bpjsKes]</td>
 <td align='center'>$d[bpjsKet]</td>
-<td width='40px' align='center'>
-<a class='btn btn-warning btn-sm fa fa-edit' href='karyawan.php?view=edit&id=$d[id]' ></a>
-<a class='btn btn-danger btn-sm fa fa fa-eraser' href='aksi_karyawan.php?act=del&id=$d[id]'></a>
-<a class='btn btn-primary btn-sm' href='karyawan.php?view=resign&id=$d[id]'>resign</a>
+<td width='2px'>
+<a class='btn btn-warning btn-sm fa fa-edit' href='karyawan.php?view=edit&id=$d[id]' ></a></td>
+<td width='2px' ><a class='btn btn-danger btn-sm fa fa fa-eraser' href='aksi_karyawan.php?act=del&id=$d[id]'></a></td>
+<td width='2px' ><a class='btn btn-primary btn-sm' href='karyawan.php?view=resign&id=$d[id]'>resign</a>
 </td>
 </tr>";
 
