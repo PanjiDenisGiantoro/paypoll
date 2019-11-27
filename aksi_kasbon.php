@@ -14,16 +14,13 @@ if($_GET['act'] =='insert'){
 	$tglKasbon = $_POST['TanggalKasbon'];
 	$keterangan = $_POST['keterangan'];
 	if( $idKaryawan==''||$nama==''||$keterangan==''||$tglKasbon==''||$jumlahKasbon==''){
-		$simpan = mysqli_query($konek,"insert into kasbons(idKaryawan,namaKaryawan,jumlahKasbon,keterangan,tgl) values ('$idKaryawan','$nama','$jumlahKasbon','$keterangan','$tglKasbon')");
-		echo var_dump($simpan);die();
+
 		header('location:kasbon.php?view=tambah&e=bl');
 	}else{
 		$simpan = mysqli_query($konek,"insert into kasbons(idKaryawan,namaKaryawan,jumlahKasbon,keterangan,tgl) values ('$idKaryawan','$nama','$jumlahKasbon','$keterangan','$tglKasbon')");
 		if($simpan){
 			header('location:kasbon.php?e=sukses');
 		}else{
-				$simpan = ("insert into kasbons(idKaryawan,namaKaryawan,jumlahKasbon,keterangan,tgl) values ('$idKaryawan','$nama','$jumlahKasbon','$keterangan','$tglKasbon')");
-		echo var_dump($simpan);die();
 			header('location:kasbon.php?e=gagal');
 		}
 	}
@@ -52,7 +49,6 @@ else if ($_GET['act'] == 'del'){
 		
 		header('location:kasbon.php?e=sukses');
 	}else{
-		echo var_dump("delete from kasbons where idKaryawan = '$_GET[id]'");die();
 		header('location:kasbon.php?e=gagal');
 	}
 }

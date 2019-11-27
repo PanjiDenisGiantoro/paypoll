@@ -56,18 +56,20 @@ Error <strong>Proses Gagal</strong>
 <th align='center'>No</th>
 <th align='center'>Id Jabatan</th>
 <th align='center'>Nama Jabatan</th>
+<th align='center'>Gaji Pokok</th>
 <th align='center' style="width: 100px;">Aksi</th>                                                                                    
 </tr>
 </thead>
 <?php
-$sql = mysqli_query($konek,"SELECT * from jabatan");
+$sql = mysqli_query($konek,"SELECT * from jabatans");
 $no=1;
 while($d= mysqli_fetch_array($sql)){
 echo 
 "<tr>
 <td width='40px' align='center'>$no</td>
 <td align='center'>$d[id]</td>
-<td align='center'>$d[nama_jabatan]</td>
+<td align='center'>$d[namaJabatan]</td>
+<td align='center'>$d[gapok]</td>
 <td width='40px' align='center'>
 <a class='btn btn-warning btn-sm fa fa-edit' href='Jabatan.php?view=edit&id=$d[id]' ></a>
 <a class='btn btn-danger btn-sm fa fa fa-eraser' href='aksi_jabatan.php?act=del&id=$d[id]'></a>
@@ -85,7 +87,7 @@ $no++;
 <?php
 break;
 case "tambah";  
-$query = "SELECT max(id) as id FROM karyawans";
+$query = "SELECT max(id) as id FROM jabatans";
 $hasil = mysqli_query($konek,$query);
 $data = mysqli_fetch_array($hasil);
 $kodeBarang = $data['id'];
@@ -149,7 +151,11 @@ Peringatan<strong>Form Belum Lengkap</strong>
     </div>
       </tr>
       <tr>
-      <tr>
+        <td>
+          <div class="form-group">
+        <label for="gapok" class=" form-control-label">Gaji Pokok</label>
+        <input type="number"name="gapok" id="gapok"  class="form-control" style="width: 400px"/>
+        </td>
          
       </tr>
     </table>
@@ -165,7 +171,7 @@ Peringatan<strong>Form Belum Lengkap</strong>
 <?php
 break;
 case "edit";
-$sqlEdit = mysqli_query($konek,"select * from jabatan where a.id='$_GET[id]'");
+$sqlEdit = mysqli_query($konek,"select * from jabatans where a.id='$_GET[id]'");
 $e = mysqli_fetch_array($sqlEdit);
 $query = "SELECT max(id) as id FROM karyawans";
 $hasil = mysqli_query($konek,$query);
@@ -219,6 +225,13 @@ $kodeBarang = $char . sprintf("%03s", $noUrut);
   <label for="namajabatan" class=" form-control-label">Nama Karyawan</label>
       <input type="text" name="namajabatan" id="namajabatan" value="<?php echo $e['nama']?>" class="form-control" readonly style="width: 400px"/>
     </td>
+      </tr>
+      <tr>
+        <td>
+           <div class="form-group">
+  <label for="gapok" class=" form-control-label">Nama Karyawan</label>
+      <input type="text" name="gapok" id="gapok" value="<?php echo $e['gapok']?>" class="form-control" readonly style="width: 400px"/>
+        </td>
       </tr>
     </table>
 <div class="card-body">

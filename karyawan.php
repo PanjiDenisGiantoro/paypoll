@@ -7,8 +7,6 @@
 
 <?php 
 $view =isset($_GET['view']) ? $_GET['view'] :null;
-
-
 switch ($view) {
 default:
 ?>
@@ -49,7 +47,7 @@ Error <strong>Proses Gagal</strong>
 }
 ?>
 <a href="karyawan.php?view=tambah" class="btn btn-primary" style="float: right; margin-right: 30px ; margin-top: 40px" >Tambah Data Karyawan</a>
-<table  class="table " >
+<table  class="table " border="0" >
 </div>
 <thead>
 <tr>
@@ -65,14 +63,19 @@ Error <strong>Proses Gagal</strong>
 <th align='center'>Tanggal Keluar</th>
 <th align='center'>BPJS Kesehatan</th>
 <th align='center'>BPJS Ketenagakerjaan</th>
-<th align='center' style="width: 100px;">Aksi</th>                                                                                                
+<th align='center' colspan="3" style="width: auto;">Aksi</th>                                                                                                
 </tr>
 </thead>
-<?php
 
+<?php
 $sql = mysqli_query($konek,"select * from karyawans ");
 $no=1;
 while($d= mysqli_fetch_array($sql)){
+     if($d['tglKeluar'] == '0000-00-00'){
+          $blm = 'Belum keluar';
+     }else {
+          $blm =$d['tglKeluar'];
+     }
 echo 
 "<tr>
 <td width='40px' align='center'>$no</td>
@@ -83,12 +86,13 @@ echo
 <td align='center'>$d[status]</td>
 <td align='center'>$d[tempatJabatan]</td>
 <td align='center'>$d[tglMasuk]</td>
-<td align='center'>$d[tglKeluar]</td>
+<td align='center'>$blm</td>
 <td align='center'>$d[bpjsKes]</td>
 <td align='center'>$d[bpjsKet]</td>
-<td width='40px' align='center'>
-<a class='btn btn-warning btn-sm fa fa-edit' href='karyawan.php?view=edit&id=$d[id]' ></a>
-<a class='btn btn-danger btn-sm fa fa fa-eraser' href='aksi_karyawan.php?act=del&id=$d[id]'></a>
+<td width='2px'>
+<a class='btn btn-warning btn-sm fa fa-edit' href='karyawan.php?view=edit&id=$d[id]' ></a></td>
+<td width='2px' ><a class='btn btn-danger btn-sm fa fa fa-eraser' href='aksi_karyawan.php?act=del&id=$d[id]'></a></td>
+<td width='2px' ><a class='btn btn-primary btn-sm' href='karyawan.php?view=resign&id=$d[id]'>resign</a>
 </td>
 </tr>";
 $no++;
@@ -106,7 +110,6 @@ $no++;
 <?php
 break;
 case "tambah";  
-
 $query = "SELECT max(id) as id FROM karyawans";
 $hasil = mysqli_query($konek,$query);
 $data = mysqli_fetch_array($hasil);
@@ -190,10 +193,17 @@ Peringatan<strong>Form Belum Lengkap</strong>
 <td> 
 <div class="form-group">
 <label for="jabatan" class=" form-control-label">Jabatan</label>
-<select name="jabatan"  class="form-control-sm form-control" style="width: 400px">
-     <option value="0">Please select</option>
-     <option value="OB">OB</option>
-     <option value="Guru">Guru</option>
+<select name="jabatan"  class="form-control-sm form-control"  style="width: 400px">
+<option value="" selected="selected">-</option>
+<?php
+// query untuk menampilkan semua mata pelajaran dari tabel 
+$query = "SELECT * FROM jabatans";
+$hasil = mysqli_query($konek,$query);
+while ($data = mysqli_fetch_array($hasil))
+{
+echo "<option value='".$data['id']."'>".$data['namaJabatan']."</option>";
+}
+?>
  </select>
 </div>
 </td>
@@ -231,8 +241,7 @@ Peringatan<strong>Form Belum Lengkap</strong>
 </td>
 <td>
 <div class="form-group">
-<label for="tglKeluar" class=" form-control-label">Tanggal Keluar</label>
-<input type="date" name="tglKeluar"  placeholder="Masukkan Tanggal Keluar Anda" class="form-control"style="width: 400px" >
+<input type="date" name="tglKeluar"  placeholder="Masukkan Tanggal Keluar Anda" hidden class="form-control"style="width: 400px" >
 </div>
 </td>
 </tr>
@@ -253,9 +262,8 @@ Peringatan<strong>Form Belum Lengkap</strong>
 </table>
 <div class="card-body">
 <input type="submit" class="btn btn-primary" value="simpan">
-
-
 <a class="btn btn-danger" href="karyawan.php">kembali</a>
+
 </div>
 </div>
 </div>
@@ -264,7 +272,6 @@ Peringatan<strong>Form Belum Lengkap</strong>
 <?php
 break;
 case "edit";
-
 $sqlEdit = mysqli_query($konek,"select * from karyawans where id='$_GET[id]'");
 $e = mysqli_fetch_array($sqlEdit);
 $query = "SELECT max(id) as id FROM karyawans";
@@ -336,27 +343,34 @@ $kodeBarang = $char . sprintf("%03s", $noUrut);
 </div>
 </td>
 <td> 
-
 <div class="form-group">
 <label for="jabatan" class=" form-control-label">Jabatan</label>
 <select name="jabatan" class="form-control-sm form-control" style="width: 400px">
-     <?php $jabatann = $e['jabatan']; ?>
-     <option <?php echo ($jabatann == 'OB') ? "selected": "" ?>>OB</option>
-     <option <?php echo ($jabatann == 'GURU') ? "selected": "" ?>>GURU</option>
+     <?php
+       $query_jurusan="SELECT * FROM jabatans";
+       $sql_jurusan=mysqli_query($konek,$query_jurusan);
+       while ($data_jurusan=mysqli_fetch_array($sql_jurusan)) {
+        if ($data['namaJabatan']==$data_jurusan['id']) {
+         $select="selected";
+        }else{
+         $select="";
+        }
+        echo "<option $select>".$data_jurusan['namaJabatan']."</option>";
+       }
+      ?>      
+    <!--  -->
  </select>
 </div>
 </td>
 </tr>
 <tr>
 <td>
-
 <div class="form-group">
 <label for="status" class=" form-control-label">Status</label>
 <select name="status"  class="form-control-sm form-control" style="width: 400px">
    <?php $statuss = $e['status']; ?>
      <option <?php echo ($statuss == 'TETAP') ? "selected": "" ?>>TETAP</option>
      <option <?php echo ($statuss == 'KONTRAK') ? "selected": "" ?>>KONRAK</option>
-
  </select>
 </div>
 </div>
@@ -382,8 +396,8 @@ $kodeBarang = $char . sprintf("%03s", $noUrut);
 </td>
 <td>
 <div class="form-group">
-<label for="tglKeluar" class=" form-control-label">Tanggal Keluar</label>
-<input type="date" name="tglKeluar" value="<?php  echo $e['tglKeluar']?>" placeholder="Masukkan Tanggal Keluar Anda" class="form-control"style="width: 400px" >
+<!-- <label for="tglKeluar" class=" form-control-label">Tanggal Keluar</label> -->
+<input type="date" name="tglKeluar" value="<?php  echo $e['tglKeluar']?>" hidden placeholder="Masukkan Tanggal Keluar Anda" class="form-control"style="width: 400px" >
 </div>
 </td>
 </tr>
@@ -410,9 +424,88 @@ $kodeBarang = $char . sprintf("%03s", $noUrut);
 </div>
 </form>
 </div>
+
+}
+?>
+<?php
+break;
+case "resign";
+$sqlEdit = mysqli_query($konek,"select * from karyawans where id='$_GET[id]'");
+$e = mysqli_fetch_array($sqlEdit);
+?>
+<section class="au-breadcrumb m-t-75">
+<div class="section__content section__content--p30">
+<div class="container-fluid">
+<div class="row">
+<div class="col-md-12">
+<div class="au-breadcrumb-content">
+<div class="au-breadcrumb-left">
+<span class="au-breadcrumb-span">You are here:</span>
+<ul class="list-unstyled list-inline au-breadcrumb__list">
+<li class="list-inline-item active">
+<a href="#">Dashboard</a>
+</li>
+<li class="list-inline-item seprate">
+<span>/</span>
+</li>
+<li class="list-inline-item">Resign Karyawan</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<br>
+<div class="col-lg-11">
+<div class="card">
+<div class="card-header">
+<strong>Karyawan</strong>
+<small> Resign</small>
+
+</div>
+<div style='margin-left:30px;'>
+<div class="card-body card-block row">
+<form action="aksi_karyawan.php?act=resign" method="post" class="form-horizontal">
+</div>
+<table  width="900px">
+
+<tr>
+<td>
+<div class="form-group">
+<label for="id" class=" form-control-label">Id Karyawan</label>
+<input type="text" value="<?php echo $e['id']; ?>" name="id" placeholder="Masukkan ID Karyawan" class="form-control"style="width: 400px" readonly>
+</div>
+</td>
+<td> 
+<div class="form-group">
+<label for="nama" class=" form-control-label">Nama Karyawan</label>
+<input type="text" name="nama" readonly value="<?php echo $e['nama']?>" placeholder="Masukkan Nama Karyawan" class="form-control"style="width: 400px">
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div class="form-group">
+<label for="tglKeluar" class=" form-control-label">Tanggal Keluar</label>
+<input type="date" name="tglKeluar"  placeholder="Masukkan Tanggal Keluar Anda" class="form-control"style="width: 400px" >
+</div>
+</td>
+</tr>
+
+</table>
+<div class="card-body">
+<input type="submit" class="btn btn-primary " value="Simpan">
+<a class="btn btn-danger" href="karyawan.php">kembali</a>
+
+
+</div>
+</div>
+</form>
+</div>
 <?php
 break;
 }
 ?>
 <?php include"footer.php";?>
-
