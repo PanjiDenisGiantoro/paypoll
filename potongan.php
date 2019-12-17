@@ -154,11 +154,12 @@ Peringatan<strong>Form Belum Lengkap</strong>
          <?php
          $konek = mysqli_connect("localhost","root","","payrol");
     $result = mysqli_query($konek,"
-                        SELECT a.nama , a.id,b.jumlahKasbon,c.jumlah,d.sisaPinjaman,e.namaJabatan,e.gapok  
+                       
+ SELECT a.nama , a.id,sum(b.jumlahKasbon) as jumlahKasbon,c.jumlah,d.sisaPinjaman,e.namajabatan,e.gapok  
                         FROM karyawans a JOIN kasbons b ON  a.id = b.idKaryawan
                         JOIN lainlains c ON c.idKaryawan = a.id
                         JOIN pinjamen d ON d.idKaryawan = a.id
-                        JOIN jabatans e ON a.jabatan = e.namaJabatan
+                        JOIN jabatan e ON a.jabatan = e.namajabatan 
 ");   
     $jsArray = "var dtMhs = new Array();\n";       
     while ($row = mysqli_fetch_array($result)) {   

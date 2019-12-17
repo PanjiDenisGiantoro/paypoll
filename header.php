@@ -38,6 +38,17 @@ include "koneksi/koneksi.php";
     <link href="assets/vendor/select2/select2.min.css" rel="stylesheet" media="all">
     <link href="assets/vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
     <link href="assets/vendor/vector-map/jqvmap.min.css" rel="stylesheet" media="all">
+        <!-- <link rel="stylesheet" type="text/css" href="../../../themes/icon.css"> -->
+        <script type="text/javascript" src="js/jquery-1.8.3.js"></script>
+        <script type="text/javascript" src="js/jquery.easyui.min.js"></script>
+        <script type="text/javascript" src="js/datagrid-filter.js"></script>
+        <script type="text/javascript" src="js/datagrid-detailview.js"></script>
+           <script src="js/jquery.autocomplete.min.js"></script>
+           <script src="js/jquery.autocomplete.js"></script>
+        <script type="text/javascript" src="js/jquery.edatagrid.js"></script>
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+        <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+        <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
     <!-- Jquery calender -->
     
     <!-- Main CSS-->
@@ -79,7 +90,7 @@ include "koneksi/koneksi.php";
                                         <i class="far fa-check-square"></i>Gaji</a>
                                 </li>
                                 <li>
-                                    <a href="Tunjangan.php">
+                                    <a href="tunjangan.php">
                                         <i class="fas fa-calendar-alt"></i>Tunjangan</a>
                                 </li>
                                 <li>
@@ -160,7 +171,14 @@ include "koneksi/koneksi.php";
                                     <a href="potongan.php">
                                         <i class="far fa-id-card"></i>Potongan</a>
                                 </li>
-                               
+                               <li>
+                                    <a href="bpjs.php">
+                                        <i class="far fa-id-card"></i>BPJS</a>
+                                </li>
+                                <li>
+                                    <a href="settingUMK.php">
+                                        <i class="far fa-id-card"></i>setting UMK</a>
+                                </li>
                             </ul>
                         </li>
                     </ul>

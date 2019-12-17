@@ -197,11 +197,11 @@ Peringatan<strong>Form Belum Lengkap</strong>
 <option value="" selected="selected">-</option>
 <?php
 // query untuk menampilkan semua mata pelajaran dari tabel 
-$query = "SELECT * FROM jabatans";
+$query = "SELECT * FROM jabatan";
 $hasil = mysqli_query($konek,$query);
 while ($data = mysqli_fetch_array($hasil))
 {
-echo "<option value='".$data['id']."'>".$data['namaJabatan']."</option>";
+echo "<option value='".$data['id']."'>".$data['namajabatan']."</option>";
 }
 ?>
  </select>
@@ -347,15 +347,15 @@ $kodeBarang = $char . sprintf("%03s", $noUrut);
 <label for="jabatan" class=" form-control-label">Jabatan</label>
 <select name="jabatan" class="form-control-sm form-control" style="width: 400px">
      <?php
-       $query_jurusan="SELECT * FROM jabatans";
+       $query_jurusan="SELECT * FROM jabatan";
        $sql_jurusan=mysqli_query($konek,$query_jurusan);
        while ($data_jurusan=mysqli_fetch_array($sql_jurusan)) {
-        if ($data['namaJabatan']==$data_jurusan['id']) {
+        if ($data['namajabatan']==$data_jurusan['id']) {
          $select="selected";
         }else{
          $select="";
         }
-        echo "<option $select>".$data_jurusan['namaJabatan']."</option>";
+        echo "<option $select>".$data_jurusan['namajabatan']."</option>";
        }
       ?>      
     <!--  -->

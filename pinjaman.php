@@ -37,7 +37,12 @@ if(isset($_GET['e']) && $_GET['e']=='sukses'){
 <div class="alert alert-success" role="alert" style="margin-top: 30px">
 Selamat <strong>Proses Berhasil</strong>
 </div>
-
+<?php 
+}else if(isset($_GET['e']) && $_GET['e']=='hutang'){
+?>
+<div class="alert alert-danger" role="alert"  style="margin-top: 30px">
+Error <strong>Belum Lunas</strong>
+</div>
 <?php
 }else if(isset($_GET['e']) && $_GET['e']=='gagal'){
 ?>
@@ -63,7 +68,7 @@ Error <strong>Proses Gagal</strong>
 </tr>
 </thead>
 <?php
-$sql = mysqli_query($konek,"SELECT a.nama AS nama,b.idKaryawan AS idKaryawan,a.id AS id,b.tgl AS tgl,b.`jumlahPinjam` AS `jumlahPinjam`,b.sisaPinjaman AS sisaPinjaman FROM karyawans a JOIN pinjamen b ON a.id = b.idKaryawan");
+$sql = mysqli_query($konek,"SELECT b.id as i ,a.nama AS nama,b.idKaryawan AS idKaryawan,a.id AS id,b.tgl AS tgl,b.`jumlahPinjam` AS `jumlahPinjam`,b.sisaPinjaman AS sisaPinjaman FROM karyawans a JOIN pinjamen b ON a.id = b.idKaryawan");
 $no=1;
 while($d= mysqli_fetch_array($sql)){
 echo 
@@ -75,8 +80,8 @@ echo
 <td align='center'>$d[sisaPinjaman]</td>
 <td align='center'>$d[tgl]</td>
 <td width='40px' align='center'>
-<a class='btn btn-warning btn-sm fa fa-edit' href='pinjaman.php?view=edit&id=$d[id]' ></a>
-<a class='btn btn-danger btn-sm fa fa fa-eraser' href='aksi_pinjaman.php?act=del&id=$d[id]'></a>
+<a class='btn btn-warning btn-sm fa fa-edit' href='pinjaman.php?view=edit&id=$d[i]' ></a>
+<a class='btn btn-danger btn-sm fa fa fa-eraser' href='aksi_pinjaman.php?act=del&id=$d[i]'></a>
 </td>
 </tr>";
 $no++;
@@ -157,8 +162,11 @@ Peringatan<strong>Form Belum Lengkap</strong>
     </td>
     <td>
          <div class="form-group">
-  <label for="id" class=" form-control-label">Nama Karyawan</label>
+  <label for="nama" class=" form-control-label">Nama Karyawan</label>
       <input type="text" name="nama" id="nama" class="form-control"style="width: 400px"/>
+       <div class="form-group">
+  <label for="id" class=" form-control-label" hidden>Nama Karyawan</label>
+      <input type="text" name="id" id="id" hidden class="form-control"style="width: 400px"/>
     </td>
       </tr>
       <tr>
@@ -166,11 +174,7 @@ Peringatan<strong>Form Belum Lengkap</strong>
         <div class="form-group">
   <label for="jumlahPinjam" class=" form-control-label">jumlah pinjam</label>
       <input type="number" name="jumlahPinjam" id="jumlahPinjam" class="form-control"style="width: 400px"/></td>
-       <td>
-        <div class="form-group">
-        <label for="sisaPinjaman" class=" form-control-label">Sisa Pinjam</label>
-        <input type="number"name="sisaPinjaman" id="sisaPinjaman"  class="form-control" style="width: 400px"/>
-        </td>
+
     </div>
       </tr>
       <tr>
@@ -201,11 +205,12 @@ Peringatan<strong>Form Belum Lengkap</strong>
 <?php
 break;
 case "edit";
-$sqlEdit = mysqli_query($konek,"select * from kasbons a join karyawans b on a.idKaryawan = b.id where a.idKaryawan='$_GET[id]'");
+$sqlEdit = mysqli_query($konek,"SELECT a.id,a.idKaryawan,b.nama,a.jumlahPinjam,a.sisaPinjaman,a.tgl FROM pinjamen a JOIN karyawans b ON a.idKaryawan = b.id 
+ where a.id='$_GET[id]'");
 $e = mysqli_fetch_array($sqlEdit);
 $query = "SELECT max(id) as id FROM pinjamen";
 $hasil = mysqli_query($konek,$query);
-$data = mysqli_fetch_array($tglsil);
+$data = mysqli_fetch_array($hasil);
 $kodeBarang = $data['id'];
 $noUrut = (int) substr($kodeBarang, 3, 3);
 $noUrut++;

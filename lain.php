@@ -275,9 +275,41 @@ $kodeBarang = $char . sprintf("%03s", $noUrut);
       </tr>
     </table>
 <div class="card-body">
-<input type="submit" class="btn btn-primary" value="simpan">
-<a class="btn btn-danger" href="lain.php">kembali</a>
+  <table >
+    <tr>
+<td><input type="submit" class="btn btn-primary" value="simpan"></td>
+<td><a class="btn btn-danger" href="lain.php">kembali</a></td>
+<td></td>
+
+      <td>
+          <input type="checkbox" id="checkbox1" name="checkbox1"  style="width: 30px;height: 30px;" >
+          <span>Mode Edit</span>
+     </td>
+      </table>
+      </tr>
 </div>
+  <script type="text/javascript">
+     $(function () {
+                $( "#jumlah" ).prop( "disabled", true );
+                 $( "#tgl" ).prop( "disabled", true );
+                 $( "#keterangan" ).prop( "disabled", true );
+                 $('#checkbox1').change(function(){
+                    if ($(this).is(':checked')) {
+                       $( "#jumlah" ).prop( "disabled", false );
+                       $( "#tgl" ).prop( "disabled", false );
+                       $( "#keterangan" ).prop( "disabled", false );
+                       $( "#jumlah" ).prop( "clear", true );
+                       $( "#tgl" ).prop( "clear", true );
+                       $( "#keterangan" ).prop( "clear", true );
+                    }else if(!$(this).is(':checked')){
+                         $( "#jumlah" ).prop( "disabled", true );
+                         $( "#tgl" ).prop( "disabled", true );
+                         $( "#keterangan" ).prop( "disabled", true );
+                    }
+                });
+               });
+ 
+    </script>
 </div>
 </div>
 </form>

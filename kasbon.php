@@ -54,10 +54,7 @@ Error <strong>Proses Gagal</strong>
 <thead>
 <tr>
 <th align='center'>No</th>
-<th align='center'>Id Karyawan</th>
 <th align='center'>Nama Karyawan</th>
-<th align='center'>Jumlah Kasbon</th>
-<th align='center'>Keterangan</th>
 <th align='center'>Tanggal Absen</th>
 <th align='center' style="width: 100px;">Aksi</th>                                                                                    
 </tr>
@@ -69,13 +66,11 @@ while($d= mysqli_fetch_array($sql)){
 echo 
 "<tr>
 <td width='40px' align='center'>$no</td>
-<td align='center'>$d[idKaryawan]</td>
 <td align='center'>$d[nama]</td>
-<td align='center'>$d[jumlahKasbon]</td>
-<td align='center'>$d[keterangan]</td>
 <td align='center'>$d[tgl]</td>
-<td width='40px' align='center'>
+<td width='50px' align='center'>
 <a class='btn btn-warning btn-sm fa fa-edit' href='kasbon.php?view=edit&id=$d[id]' ></a>
+<a class='btn btn-warning btn-sm fa fa-edit' href='kasbon.php?view=edit1&id=$d[id]' ></a>
 <a class='btn btn-danger btn-sm fa fa fa-eraser' href='aksi_kasbon.php?act=del&id=$d[id]'></a>
 </td>
 </tr>";
@@ -184,6 +179,13 @@ Peringatan<strong>Form Belum Lengkap</strong>
                   <textarea rows="5" class="form-control" id="keterangan" name="keterangan" style="width: 400px">
                   </textarea>
           </td>
+          <td>
+            
+         <div class="form-group">
+  <label for="id" class=" form-control-label">Nama Karyawan</label>
+      <!-- <input type="text" name="nama" id="nama" class="form-control"style="width: 400px"/> -->
+       <input type="text" id="buah" name="buah" placeholder="Nama Buah" value="">
+          </td>
       </tr>
     </table>
       <script type="text/javascript">   
@@ -245,6 +247,44 @@ $kodeBarang = $noUrut;
 <strong>Karyawan</strong>
 <small> edit</small>
 </div>
+<style type="text/css">
+   input[type=text] {
+                border: 2px solid #bdbdbd;
+                font-family: 'Roboto', Arial, Sans-serif;
+                font-size: 15px;
+                font-weight: 400;
+                padding: .5em .75em;
+                width: 300px;
+            }
+            input[type=text]:focus {
+                border: 2px solid #757575;
+                outline: none;
+            }
+            .autocomplete-suggestions {
+                border: 1px solid #999;
+                background: #FFF;
+                overflow: auto;
+            }
+            .autocomplete-suggestion {
+                padding: 2px 5px;
+                white-space: nowrap;
+                overflow: hidden;
+            }
+            .autocomplete-selected {
+                background: #F0F0F0;
+            }
+            .autocomplete-suggestions strong {
+                font-weight: normal;
+                color: #3399FF;
+            }
+            .autocomplete-group {
+                padding: 2px 5px;
+            }
+            .autocomplete-group strong {
+                display: block;
+                border-bottom: 1px solid #000;
+            }
+</style>
 <div style='margin-left:30px;'>
 <div class="card-body card-block row">
 <form action="aksi_kasbon.php?act=update" method="post" class="form-horizontal">
@@ -279,20 +319,35 @@ $kodeBarang = $noUrut;
               <label for="keterangan" class="form-control-label">Keterangan</label>
               <textarea rows="5" class="form-control" id="keterangan" name="keterangan" style="width: 400px"><?php echo $e['keterangan']?>
               </textarea>
+               <input type="text" id="buah" name="buah" placeholder="Nama Buah" value="">
           </td>
       </tr>
     </table>
 <div class="card-body">
 <input type="submit" class="btn btn-primary" value="simpan">
 <a class="btn btn-danger" href="kasbon.php">kembali</a>
+<input type="checkbox" name="sitem" id="sitem" style="width: 50px;height:40px;" checked="true" >
+<script type="text/javascript">
+  
+     $(document).ready(function() {
+                // Selector input yang akan menampilkan autocomplete.
+                $( "#buah" ).autocomplete({
+                    serviceUrl: "json/json_karyawan.php",   // Kode php untuk prosesing data.
+                    dataType: "JSON",           // Tipe data JSON.
+                    onSelect: function (suggestion) {
+                        $( "#buah" ).val("" + suggestion.buah);
+                    }
+                });
+            })
+</script>
 </div>
 </div>
 </div>
 </form>
+
 </div>
 <?php
 break;
 }
 ?>
 <?php include"footer.php";?>
-
