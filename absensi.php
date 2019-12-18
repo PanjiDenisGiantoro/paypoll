@@ -65,7 +65,7 @@ Error <strong>Proses Gagal</strong>
 </thead>
 <?php
 
-$sql = mysqli_query($konek,"SELECT a.nama as nama ,a.jabatan as jabatan ,b.idKaryawan as idKaryawan,b.tglAbsen as tglAbsen,b.keterangan as keterangan,a.id as id from karyawans a join absens b on a.id = b.idKaryawan  ");
+$sql = mysqli_query($konek,"SELECT b.id as id, a.nama as nama ,a.jabatan as jabatan ,b.idKaryawan as idKaryawan,b.tglAbsen as tglAbsen,b.keterangan as keterangan,a.id as ids from karyawans a join absens b on a.id = b.idKaryawan  ");
 $no=1;
 while($d= mysqli_fetch_array($sql)){
 echo 
@@ -94,6 +94,8 @@ $no++;
 <?php
 break;
 case "tambah";  
+// $sqlEdit = mysqli_query($konek,"select * from absens a join karyawans b on a.idKaryawan = b.id where a.id='$_GET[id]'");
+// $e = mysqli_fetch_array($sqlEdit);
 $query = "SELECT max(id) as id FROM absens";
 $hasil = mysqli_query($konek,$query);
 $data = mysqli_fetch_array($hasil);
@@ -137,21 +139,95 @@ Peringatan<strong>Form Belum Lengkap</strong>
 </div>
 </section>
 <br>
-<div class="col-lg-11">
-<div class="card">
-<div class="card-header">
-<strong>Absensi</strong>
-<small> Tambah</small>
-</div>
 <div style='margin-left:30px;'>
 <div class="card-body card-block row">
-<form method="post" action="aksi_absensi.php?act=insert" class="form-horizontal">
 </div>
-    <table  width="900px">
-      <tr>
-        <td>
-            <div class="form-group">
-                <label for="idKaryawan" class=" form-control-label">Id Karyawan</label>
+   <style>
+body {font-family: Arial;}
+
+/* Style the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+</style>
+
+<div class="tab">
+  <button class="tablinks" onclick="openCity(event, 'London')">Sakit</button>
+  <button class="tablinks" onclick="openCity(event, 'Paris')">Izin</button>
+  <button class="tablinks" onclick="openCity(event, 'Tokyo')">Alfa</button>
+</div>
+
+<div id="London" class="tabcontent">
+  <h3>Sakit</h3>
+
+  <?php
+  if(!isset($_FILES['gambar']['tmp_name'])){
+        echo '<span style="color:red"><b><u><i>Pilih file gambar</i></u></b></span>';
+    }
+    else
+    {
+        $file_name = $_FILES['gambar']['name'];
+        $file_size = $_FILES['gambar']['size'];
+        $file_type = $_FILES['gambar']['type'];
+        if ($file_size < 2048000 and ($file_type =='image/jpeg' or $file_type == 'image/png'))
+        {
+            $image   = addslashes(file_get_contents($_FILES['gambar']['tmp_name']));
+            $keterangan = $_POST['keterangan'];
+            $keterangan = $_POST['keterangan'];
+            $keterangan = $_POST['keterangan'];
+            $keterangan = $_POST['keterangan'];
+            mysqli_query($koneksi,"insert into tb_gambar (gambar,nama_gambar,tipe_gambar,ukuran_gambar,keterangan) values ('$image','$file_name','$file_type','$file_size','$keterangan')");
+            header("location:absensi.php");
+        }
+      
+    }
+
+?>
+<html>
+    <head>
+        <title></title>
+    </head>
+    <body>
+
+<div style='margin-left:30px;'>
+        <form method="post" action="" enctype="multipart/form-data" class="form-horizontal">
+        <table>
+          <tr>
+            <td>
+               <div class="form-group">
+             <label for="idKaryawan" class=" form-control-label">Id Karyawan</label>
             <select name="idKaryawan" id="idKaryawan" class=" form-control" onchange="changeValue(this.value)" style="width: 400px" >
         <option value=0>-Pilih-</option>
          <?php
@@ -160,56 +236,77 @@ Peringatan<strong>Form Belum Lengkap</strong>
     $jsArray = "var dtMhs = new Array();\n";       
     while ($row = mysqli_fetch_array($result)) {   
         echo '<option value="'.$row['id'].'">'.$row['id'].'</option>';   
-        $jsArray .= "dtMhs['".$row['id']."'] = {nama:'".addslashes($row['nama'])."',jabatan:'".addslashes($row['jabatan'])."'};\n";   
+        $jsArray .= "dtMhs['".$row['id']."'] = {nama:'".addslashes($row['nama'])."'};\n";   
     }     
     ?>   
         </select>
-    </td>
-    <td>
-<div class="form-group">
-<label for="tglAbsen" class=" form-control-label">Tanggal Absen</label>
-<input type="date" name="tglAbsen"  placeholder="Masukkan Tanggal Absen Anda" value="<?php echo date('Y-m-d') ?>" class="form-control"style="width: 400px" >
-</div>
-</td>
-   
-      </tr>
-      <tr>
-        <td>
-        <div class="form-group">
-  <label for="nama" class=" form-control-label">Nama Karyawan</label>
-      <input type="text" name="nama" id="nama" class="form-control"style="width: 400px"/></td>
-       <td>
-        <div class="form-group">
-  <label for="id" class=" form-control-label">jabatan Karyawan</label>
-      <input type="text" name="jabatan" id="jabatan" class="form-control"style="width: 400px"/></td>
+              </td>
+              <td>
+                    <div class="form-group">
+  <label for="id" class=" form-control-label">Nama Karyawan</label>
+      <input type="text" name="nama" id="nama" class="form-control"style="width: 300px"/>
     </div>
-      </tr>
-      <tr>
-        <td>
-        <div class="form-group">
-        <label for="keterangan" class=" form-control-label">keterangan absen</label>
-        <textarea name="keterangan" id="keterangan" rows="9" placeholder="Content..." class="form-control" style="width: 400px"></textarea>
-        </td>
-      </tr>
-    </table>
-      <script type="text/javascript">   
+              </td>
+          </tr>
+            <tr>
+               <td>
+               <div class="form-group">
+        <label for="tgl" class=" form-control-label">Tanggal Kasbon</label>
+        <input type="date"name="tgl" id="tgl" value="<?php echo date('Y-m-d') ?>" class="form-control" style="width: 300px"/>
+      </div>
+               </td>
+               <td>
+                 <div class="form-group">
+  <label for="gambar" class=" form-control-label">Upload Gambar</label>
+      <input type="file" name="gambar" id="gambar" class="form-control"style="width: 300px"/>
+    </div>
+               </td>
+            </tr>
+            <tr>
+                <td>   <div class="form-group">
+              <label for="Keterangan" class=" form-control-label">Keterangan</label>
+              <textarea rows="text"name="Keterangan" id="Keterangan"  class="form-control" style="width: 300px"></textarea> 
+              </td>
+          </div></textarea></td>
+            </tr>
+            <tr>
+
+            </tr>
+        </table>
+         <td><input type="submit" class="btn btn-primary"name="tombol"/></td>
+        </form>
+    </body>
+</html>
+  ?>
+</div>
+
+<div id="Paris" class="tabcontent">
+  <h3>Izin</h3>
+</div>
+
+<div id="Tokyo" class="tabcontent">
+  <h3>Alfa</h3>
+</div>
+
+<script>
+function openCity(evt, cityName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.className += " active";
+}   
     <?php echo $jsArray; ?> 
     function changeValue(id){ 
-    document.getElementById('nama').value = dtMhs[id].nama; 
-    document.getElementById('jabatan').value = dtMhs[id].jabatan; 
+    document.getElementById('nama').value = dtMhs[id].nama;
     }; 
-    </script>
-<div class="card-body">
-<input type="submit" class="btn btn-primary" value="simpan">
-
-
-<a class="btn btn-danger" href="absensi.php">kembali</a>
-</div>
-</div>
-</div>
-
-</form>
-
+</script>
 </div>
 <?php
 break;
