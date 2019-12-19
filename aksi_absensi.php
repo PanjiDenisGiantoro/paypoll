@@ -12,21 +12,23 @@ if($_GET['act'] =='insert'){
 	$idKaryawan = $_POST['idKaryawan'];
 	$tglAbsen = $_POST['tglAbsen'];
 	$keterangan = $_POST['keterangan'];
+	$foto = $_FILES['foto']['name'];
+	$tmp = $_FILES['foto']['tmp_name'];
+	$path = "img/".$fotobaru;
+	$fotobaru = date('dmYHis').$foto;
 	if( $idKaryawan==''||$tglAbsen==''||$keterangan==''){
 	
 
 		header('location:absensi.php?view=tambah&e=bl');
 	}else{
-		$simpan = mysqli_query($konek,"insert into absens(idKaryawan,tglAbsen,keterangan) values ('$idKaryawan','$tglAbsen','$keterangan')");
+		$simpan = mysqli_query($konek,"insert into absens(idKaryawan,tglAbsen,keterangan,Gambar) values ('$idKaryawan','$tglAbsen','$keterangan','$fotobaru')");
 
 		if($simpan){
 			header('location:absensi.php?e=sukses');
 		}else{
-
 			header('location:absensi.php?e=gagal');
 		}
 	}
-
 }
 else if ($_GET['act']=='update'){
 	$idKaryawan = $_POST['idKaryawan'];

@@ -142,7 +142,7 @@ Peringatan<strong>Form Belum Lengkap</strong>
 <div style='margin-left:30px;'>
 <div class="card-body card-block row">
 </div>
-   <style>
+<style>
 body {font-family: Arial;}
 
 /* Style the tab */
@@ -182,6 +182,10 @@ body {font-family: Arial;}
   border-top: none;
 }
 </style>
+</head>
+<body>
+
+<h2>Absen Karyawan</h2>
 
 <div class="tab">
   <button class="tablinks" onclick="openCity(event, 'London')">Sakit</button>
@@ -191,38 +195,8 @@ body {font-family: Arial;}
 
 <div id="London" class="tabcontent">
   <h3>Sakit</h3>
-
-  <?php
-  if(!isset($_FILES['gambar']['tmp_name'])){
-        echo '<span style="color:red"><b><u><i>Pilih file gambar</i></u></b></span>';
-    }
-    else
-    {
-        $file_name = $_FILES['gambar']['name'];
-        $file_size = $_FILES['gambar']['size'];
-        $file_type = $_FILES['gambar']['type'];
-        if ($file_size < 2048000 and ($file_type =='image/jpeg' or $file_type == 'image/png'))
-        {
-            $image   = addslashes(file_get_contents($_FILES['gambar']['tmp_name']));
-            $keterangan = $_POST['keterangan'];
-            $keterangan = $_POST['keterangan'];
-            $keterangan = $_POST['keterangan'];
-            $keterangan = $_POST['keterangan'];
-            mysqli_query($koneksi,"insert into tb_gambar (gambar,nama_gambar,tipe_gambar,ukuran_gambar,keterangan) values ('$image','$file_name','$file_type','$file_size','$keterangan')");
-            header("location:absensi.php");
-        }
-      
-    }
-
-?>
-<html>
-    <head>
-        <title></title>
-    </head>
-    <body>
-
-<div style='margin-left:30px;'>
-        <form method="post" action="" enctype="multipart/form-data" class="form-horizontal">
+   
+    <form method="post"  action="aksi_absensi.php?act=insert"  enctype="multipart/form-data" class="form-horizontal">
         <table>
           <tr>
             <td>
@@ -257,8 +231,8 @@ body {font-family: Arial;}
                </td>
                <td>
                  <div class="form-group">
-  <label for="gambar" class=" form-control-label">Upload Gambar</label>
-      <input type="file" name="gambar" id="gambar" class="form-control"style="width: 300px"/>
+  <label for="foto" class=" form-control-label">Upload Gambar</label>
+      <input type="file" name="foto" id="foto" class="form-control"style="width: 300px"/>
     </div>
                </td>
             </tr>
@@ -267,25 +241,128 @@ body {font-family: Arial;}
               <label for="Keterangan" class=" form-control-label">Keterangan</label>
               <textarea rows="text"name="Keterangan" id="Keterangan"  class="form-control" style="width: 300px"></textarea> 
               </td>
-          </div></textarea></td>
+              </textarea></td>
+       
             </tr>
-            <tr>
-
-            </tr>
+               </div>
+           
         </table>
          <td><input type="submit" class="btn btn-primary"name="tombol"/></td>
         </form>
-    </body>
-</html>
-  ?>
 </div>
 
 <div id="Paris" class="tabcontent">
   <h3>Izin</h3>
+
+    <form method="post"  action="aksi_absensi.php?act=insert"  enctype="multipart/form-data" class="form-horizontal">
+        <table>
+          <tr>
+            <td>
+               <div class="form-group">
+             <label for="idKaryawan" class=" form-control-label">Id Karyawan</label>
+            <select name="idKaryawan" id="idKaryawan" class=" form-control" onchange="changeValue(this.value)" style="width: 400px" >
+        <option value=0>-Pilih-</option>
+         <?php
+         $konek = mysqli_connect("localhost","root","","payrol");
+    $result = mysqli_query($konek,"SELECT * from karyawans");   
+    $jsArray = "var dtMhs = new Array();\n";       
+    while ($row = mysqli_fetch_array($result)) {   
+        echo '<option value="'.$row['id'].'">'.$row['id'].'</option>';   
+        $jsArray .= "dtMhs['".$row['id']."'] = {nama:'".addslashes($row['nama'])."'};\n";   
+    }     
+    ?>   
+        </select>
+              </td>
+              <td>
+                    <div class="form-group">
+  <label for="id" class=" form-control-label">Nama Karyawan</label>
+      <input type="text" name="nama" id="nama" class="form-control"style="width: 300px"/>
+    </div>
+              </td>
+          </tr>
+            <tr>
+               <td>
+               <div class="form-group">
+        <label for="tgl" class=" form-control-label">Tanggal Kasbon</label>
+        <input type="date"name="tgl" id="tgl" value="<?php echo date('Y-m-d') ?>" class="form-control" style="width: 300px"/>
+      </div>
+               </td>
+               <td>
+                 <div class="form-group">
+  <label for="foto" class=" form-control-label">Upload Gambar</label>
+      <input type="file" name="foto" id="foto" class="form-control"style="width: 300px"/>
+    </div>
+               </td>
+            </tr>
+            <tr>
+                <td>   <div class="form-group">
+              <label for="Keterangan" class=" form-control-label">Keterangan</label>
+              <textarea rows="text"name="Keterangan" id="Keterangan"  class="form-control" style="width: 300px"></textarea> 
+              </td>
+              </textarea></td>
+       
+            </tr>
+               </div>
+           
+        </table>
+         <td><input type="submit" class="btn btn-primary"name="tombol"/></td>
+        </form> 
 </div>
 
 <div id="Tokyo" class="tabcontent">
   <h3>Alfa</h3>
+
+    <form method="post"  action="aksi_absensi.php?act=insert"  enctype="multipart/form-data" class="form-horizontal">
+        <table>
+          <tr>
+            <td>
+               <div class="form-group">
+             <label for="idKaryawan" class=" form-control-label">Id Karyawan</label>
+            <select name="idKaryawan" id="idKaryawan" class=" form-control" onchange="changeValue(this.value)" style="width: 400px" >
+        <option value=0>-Pilih-</option>
+         <?php
+         $konek = mysqli_connect("localhost","root","","payrol");
+    $result = mysqli_query($konek,"SELECT * from karyawans");   
+    $jsArray = "var dtMhs = new Array();\n";       
+    while ($row = mysqli_fetch_array($result)) {   
+        echo '<option value="'.$row['id'].'">'.$row['id'].'</option>';   
+        $jsArray .= "dtMhs['".$row['id']."'] = {nama:'".addslashes($row['nama'])."'};\n";   
+    }     
+    ?>   
+        </select>
+              </td>
+              <td>
+                    <div class="form-group">
+  <label for="id" class=" form-control-label">Nama Karyawan</label>
+      <input type="text" name="nama" id="nama" class="form-control"style="width: 300px"/>
+    </div>
+          </td>
+          </tr>
+            <tr>
+               <td>
+               <div class="form-group">
+        <label for="tgl" class=" form-control-label">Tanggal Kasbon</label>
+        <input type="date"name="tgl" id="tgl" value="<?php echo date('Y-m-d') ?>" class="form-control" style="width: 300px"/>
+      </div>
+               </td>
+               <td>
+                 <div class="form-group">
+  <label for="foto" class=" form-control-label">Upload Gambar</label>
+      <input type="file" name="foto" id="foto" class="form-control"style="width: 300px"/>
+    </div>
+               </td>
+            </tr>
+            <tr>
+                <td>   <div class="form-group">
+              <label for="Keterangan" class=" form-control-label">Keterangan</label>
+              <textarea rows="text"name="Keterangan" id="Keterangan"  class="form-control" style="width: 300px"></textarea> 
+              </td>
+              </textarea></td>
+            </tr>
+               </div>
+        </table>
+         <td><input type="submit" class="btn btn-primary"name="tombol"/></td>
+        </form>
 </div>
 
 <script>
@@ -301,13 +378,13 @@ function openCity(evt, cityName) {
   }
   document.getElementById(cityName).style.display = "block";
   evt.currentTarget.className += " active";
-}   
-    <?php echo $jsArray; ?> 
+}
+   <?php echo $jsArray; ?> 
     function changeValue(id){ 
     document.getElementById('nama').value = dtMhs[id].nama;
     }; 
 </script>
-</div>
+   </div>
 <?php
 break;
 case "edit";
