@@ -59,8 +59,15 @@ Error <strong>Proses Gagal</strong>
 </tr>
 </thead>
 <?php
-$sql = mysqli_query($konek,"SELECT a.nama AS nama,b.idKaryawan AS idKaryawan,b.keterangan AS keterangan,a.id AS id,b.tgl AS tgl,b.`jumlah` AS `jumlah` FROM karyawans a JOIN lainlains b ON a.id = b.idKaryawan");
-$no=1;
+ $halaman = 10;
+  $page = isset($_GET["halaman"]) ? (int)$_GET["halaman"] : 1;
+  $mulai = ($page>1) ? ($page * $halaman) - $halaman : 0;
+  $result = mysqli_query($konek,"SELECT * FROM lainlains");
+  $total = mysqli_num_rows($result);
+  $pages = ceil($total/$halaman);            
+
+$sql = mysqli_query($konek,"SELECT a.nama AS nama,b.idKaryawan AS idKaryawan,b.keterangan AS keterangan,a.id AS id,b.tgl AS tgl,b.`jumlah` AS `jumlah` FROM karyawans a JOIN lainlains b ON a.id = b.idKaryawan LIMIT $mulai, $halaman")or die(mysql_error);
+  $no =$mulai+1;
 while($d= mysqli_fetch_array($sql)){
 echo 
 "<tr>
@@ -75,10 +82,22 @@ echo
 <a class='btn btn-danger btn-sm fa fa fa-eraser' href='aksi_lain.php?act=del&id=$d[id]'></a>
 </td>
 </tr>";
+
 $no++;
 }
 ?>
 </table>
+<table border="1" width="20px" style="text-align: center; position: center;">
+  <tr>
+    <td>
+        <?php for ($i=1; $i<=$pages ; $i++){ ?>
+  <a href="?halaman=<?php echo $i; ?>"><?php echo $i; ?></a>
+  <?php } ?>
+    </td>
+  </tr>
+
+ </table>
+</div>
 <tbody>
 </div>
 </div>

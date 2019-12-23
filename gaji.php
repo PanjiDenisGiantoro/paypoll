@@ -78,8 +78,8 @@ echo
 <td align='center'>$d[idTunjangan]</td>
 <td align='center'>$d[total]</td>
 <td width='40px' align='center'>
-<a class='btn btn-warning btn-sm fa fa-edit' href='tunjangan.php?view=edit&id=$d[id]' ></a>
-<a class='btn btn-danger btn-sm fa fa fa-eraser' href='aksi_tunjangan.php?act=del&id=$d[id]'></a>
+<a class='btn btn-warning btn-sm fa fa-edit' href='gaji.php?view=edit&id=$d[id]' ></a>
+<a class='btn btn-danger btn-sm fa fa fa-eraser' href='aksi_gaji.php?act=del&id=$d[id]'></a>
 </td>
 </tr>";
 $no++;
@@ -140,6 +140,19 @@ Peringatan<strong>Form Belum Lengkap</strong>
 <div class="card-body card-block row">
 <form method="post" action="aksi_gaji.php?act=insert" class="form-horizontal">
 </div>
+<?php
+         $konek = mysqli_connect("localhost","root","","payrol");
+    $result = mysqli_query($konek,"SELECT (a.fungsional+a.keluarga+a.transport+a.idTunjangan+a.makanFas) as tunjangan,
+(b.zakat+b.Pinjaman+b.Kasbon+b.Lainlain+b.makan) as potongan ,d.gapok,c.id,c.nama
+ from tunjangans a join potongans b on a.idKaryawan = b.idKaryawan join karyawans c on a.idKaryawan = c.id
+join jabatan d on d.namajabatan = c.jabatan
+");
+$result1 = mysqli_fetch_array($result);
+$tunjangan = $result1['tunjangan'];
+$potongan = $result1['potongan'];
+$gapok = $result1['gapok'];
+$total = $gapok+$potongan+$tunjangan;   
+?>
     <table  width="900px">
       <tr>
         <td>
@@ -149,14 +162,14 @@ Peringatan<strong>Form Belum Lengkap</strong>
          <?php
          $konek = mysqli_connect("localhost","root","","payrol");
     $result = mysqli_query($konek,"SELECT (a.fungsional+a.keluarga+a.transport+a.idTunjangan+a.makanFas) as tunjangan,
-(b.zakat+b.Pinjaman+b.Kasbon+b.Lainlain+b.makan) as potongan ,d.gapok
+(b.zakat+b.Pinjaman+b.Kasbon+b.Lainlain+b.makan) as potongan ,d.gapok,c.id,c.nama
  from tunjangans a join potongans b on a.idKaryawan = b.idKaryawan join karyawans c on a.idKaryawan = c.id
 join jabatan d on d.namajabatan = c.jabatan
 ");   
  $jsArray = "var dtMhs = new Array();\n";       
     while ($row = mysqli_fetch_array($result)) {   
         echo '<option value="'.$row['id'].'">'.$row['id'].'</option>';   
-        $jsArray .= "dtMhs['".$row['id']."'] = {nama:'".addslashes($row['namajabatan'])."',jumlah:'".addslashes($row['jumlah'])."',fungsional:'".addslashes($row['fungsional'])."',jumlah:'".addslashes($row['jumlah'])."',gapok:'".$row['gapok']."',Transport:'".addslashes($row['timeIn'])."',makanFas:'".addslashes($row['timeIn'])."',id_jabatan:'".addslashes($row['idJ'])."'};\n";
+        $jsArray .= "dtMhs['".$row['id']."'] = {nama:'".addslashes($row['nama'])."',idPotongan:'".addslashes($row['potongan'])."',idTunjangan:'".addslashes($row['tunjangan'])."',idGapok:'".addslashes($row['gapok'])."',total:'".$total."'};\n";
     }     
     ?>     
         </select>
@@ -165,14 +178,14 @@ join jabatan d on d.namajabatan = c.jabatan
       <tr>
         <td>
         <div class="form-group">
-  <label for="fungsional" class=" form-control-label">Nama Jabatan</label>
+  <label for="fungsional" class=" form-control-label">Nama Karyawan</label>
       <input type="text" name="nama" id="nama" class="form-control"style="width: 400px"/>
     </div>  
     </td>
     <td>
          <div class="form-group">
   <label for="tglBuat" class=" form-control-label">Tanggal Buat</label>
-      <input type="text" name="tglBuat" id="tglBuat" class="form-control"style="width: 400px"/>
+      <input type="date" name="tglBuat" id="tglBuat"  value="<?php echo date('Y-m-d') ?>" class="form-control"style="width: 400px"/>
     </div>
     </td>
       </tr>
@@ -209,142 +222,24 @@ join jabatan d on d.namajabatan = c.jabatan
 </div>
 </div>
 </div>
+
 </form>
  <script type="text/javascript">   
     <?php echo $jsArray; ?> 
     function changeValue(id){ 
+
+
     document.getElementById('nama').value = dtMhs[id].nama;
-    document.getElementById('jumlah').value = dtMhs[id].jumlah;
-    document.getElementById('fungsional').value = dtMhs[id].fungsional;
-    document.getElementById('id_jabatan').value = dtMhs[id].id_jabatan;
-    document.getElementById('Transport').value = dtMhs[id].Transport*17000;
-    document.getElementById('makanFas').value = dtMhs[id].makanFas*17000;
+    document.getElementById('idGapok').value = dtMhs[id].idGapok;
+    document.getElementById('idTunjangan').value = dtMhs[id].idTunjangan;
+    document.getElementById('idPotongan').value = dtMhs[id].idPotongan;
+    document.getElementById('total').value = dtMhs[id].total;
     }; 
     </script>
 </div>
 <?php
 break;
 case "edit";
-$sqlEdit = mysqli_query($konek,"select * from tunjangan a join karyawans b on a.idKaryawan = b.id where a.idKaryawan='$_GET[id]'");
-$e = mysqli_fetch_array($sqlEdit);
-$query = "SELECT max(id) as id FROM tunjangan";
-$hasil = mysqli_query($konek,$query);
-$data = mysqli_fetch_array($hasil);
-$kodeBarang = $data['id'];
-$noUrut = (int) substr($kodeBarang, 3, 3);
-$noUrut++;
-$char = "K";
-$kodeBarang = $noUrut;
-?>
-<section class="au-breadcrumb m-t-75">
-<div class="section__content section__content--p30">
-<div class="container-fluid">
-<div class="row">
-<div class="col-md-12">
-<div class="au-breadcrumb-content">
-<div class="au-breadcrumb-left">
-<span class="au-breadcrumb-span">You are here:</span>
-<ul class="list-unstyled list-inline au-breadcrumb__list">
-<li class="list-inline-item active">
-<a href="#">Dashboard</a>
-</li>
-<li class="list-inline-item seprate">
-<span>/</span>
-</li>
-<li class="list-inline-item">Edit tunjangan Karyawan</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<br>
-<div class="col-lg-11">
-<div class="card">
-<div class="card-header">
-<strong>tunjangan</strong>
-<small> edit</small>
-</div>
-<div style='margin-left:30px;'>
-<div class="card-body card-block row">
-<form action="aksi_tunjangan.php?act=update" method="post" class="form-horizontal">
-</div>
-    <table  width="900px">
-      <tr>
-        <td>
-        <div class="form-group">
-  <label for="fungsional" class=" form-control-label">Nama Jabatan</label>
-      <input type="text" name="id_jabatan" id="id_jabatan" class="form-control"style="width: 400px"/>
-    </div>  
-    </td>
-    <td>
-         <div class="form-group">
-  <label for="fungsional" class=" form-control-label">nama Fungsional</label>
-      <input type="text" name="fungsional" id="fungsional" class="form-control"style="width: 400px"/>
-    </div>
-    </td>
-      </tr>
-      <tr>
-       <td>
-        <div class="form-group">
-  <label for="keluarga" class=" form-control-label">keluarga</label>
-      <input type="number" name="keluarga" id="keluarga" class="form-control"style="width: 400px"/></td>
-       <td>
-        <div class="form-group">
-        <label for="Transport" class=" form-control-label">Transport</label>
-        <input type="number"name="Transport" id="Transport"  class="form-control" style="width: 400px"/>
-        </td>
-    </div>
-      </tr>
-       <tr>
-       <td>
-        <div class="form-group">
-  <label for="idTunjangan" class=" form-control-label">idTunjangan</label>
-      <input type="number" name="idTunjangan" id="idTunjangan" class="form-control"style="width: 400px"/></td>
-       <td>
-        <div class="form-group">
-        <label for="makanFas" class=" form-control-label">makan </label>
-        <input type="number"name="makanFas" id="makanFas"  class="form-control" style="width: 400px"/>
-        </td>
-    </div>
-      </tr>
-       <tr>
-       <td>
-        <div class="form-group">
-  <label for="lemburUmum" class=" form-control-label">lemburUmum</label>
-      <input type="number" name="lemburUmum" id="lemburUmum" class="form-control"style="width: 400px"/></td>
-       <td>
-        <div class="form-group">
-        <label for="lemburKhusus" class=" form-control-label">lemburKhusus</label>
-        <input type="number"name="lemburKhusus" id="lemburKhusus"  class="form-control" style="width: 400px"/>
-        </td>
-    </div>
-      </tr>
-       <tr>
-       <td>
-        <div class="form-group">
-  <label for="bpjsKes" class=" form-control-label">bpjsKes</label>
-      <input type="number" name="bpjsKes" id="bpjsKes" class="form-control"style="width: 400px"/></td>
-       <td>
-        <div class="form-group">
-        <label for="bpjsKet" class=" form-control-label">bpjsKet</label>
-        <input type="number"name="bpjsKet" id="bpjsKet"  class="form-control" style="width: 400px"/>
-        </td>
-    </div>
-      </tr>
-       
-    </table>
-<div class="card-body">
-<input type="submit" class="btn btn-primary" value="simpan">
-<a class="btn btn-danger" href="tunjangan.php">kembali</a>
-</div>
-</div>
-</div>
-</form>
-</div>
-<?php
 break;
 }
 ?>
