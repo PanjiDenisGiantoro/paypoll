@@ -44,19 +44,7 @@ Error <strong>Proses Gagal</strong>
 <?php
 }
 ?>
-<form action="lain.php" method="get">
-  <label>Cari :</label>
-  <input type="text" name="cari">
-  <input type="submit" value="Cari" class="btn btn-success">
-</form>
-<?php 
-if(isset($_GET['cari'])){
-  $cari = $_GET['cari'];
-  echo "<b>Hasil pencarian : ".$cari."</b>";
-}
-?>
 <a href="lain.php?view=tambah" class="btn btn-primary" style="float: right; margin-right: 30px ; margin-top: 40px" >Tambah Data kasbon Karyawan</a>
-<a href="laporan_cetak.php" target="_BLANK" class="btn btn-success" style="float: right; margin-right: 30px ; margin-top: 40px" >TES PRINT</a>
 <table  class="table " >
 </div>
 <thead>
@@ -71,12 +59,7 @@ if(isset($_GET['cari'])){
 </tr>
 </thead>
 <?php
-if(isset($_GET['cari'])){
-  $cari = $_GET['cari'];
-    $sql = mysqli_query($konek,"SELECT a.nama AS nama,b.idKaryawan AS idKaryawan,b.keterangan AS keterangan,a.id AS id,b.tgl AS tgl,b.`jumlah` AS `jumlah` FROM karyawans a JOIN lainlains b ON a.id = b.idKaryawan where nama like '%".$cari."%'");       
-  }else{
 $sql = mysqli_query($konek,"SELECT a.nama AS nama,b.idKaryawan AS idKaryawan,b.keterangan AS keterangan,a.id AS id,b.tgl AS tgl,b.`jumlah` AS `jumlah` FROM karyawans a JOIN lainlains b ON a.id = b.idKaryawan");
-}
 $no=1;
 while($d= mysqli_fetch_array($sql)){
 echo 

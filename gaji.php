@@ -48,45 +48,35 @@ Error <strong>Proses Gagal</strong>
 <?php
 }
 ?>
-<a href="tunjangan.php?view=tambah" class="btn btn-primary" style="float: right; margin-right: 30px ; margin-top: 40px" >Tambah Data tunjangan Karyawan</a>
+<a href="gaji.php?view=tambah" class="btn btn-primary" style="float: right; margin-right: 30px ; margin-top: 40px" >Tambah Data gaji Karyawan</a>
 <table  class="table " >
 </div>
 <thead>
 <tr>
 <th align='center'>No</th>
-<th align='center'>Id Jabatan</th>
-<th align='center'>Nama Karyawan</th>
-<th align='center'>Nama Fungsional</th>
-<th align='center'>Keluarga</th>
-<th align='center'>Transport</th>
-<th align='center'>Id Tunjangan</th>
-<th align='center'>Makan Fasilitas</th>
-<th align='center'>Lembur Umum</th>
-<th align='center'>Lembur Khusus</th>
-<th align='center'>Bpjs Kesehatan</th>
-<th align='center'>Bpjs Ketenagakerjaan</th>
+<th align='center'>Id Karyawan</th>
+<th align='center'>Tanggal Buat</th>
+<th align='center'>Potongan</th>
+<th align='center'>Gaji Pokok</th>
+<th align='center'>Tunjangan</th>
+<th align='center'>Total</th>
 <th align='center' style="width: 100px;">Aksi</th>                                                                                    
 </tr>
 </thead>
 <?php
-$sql = mysqli_query($konek,"SELECT a.*, b.nama from tunjangans a join karyawans b on a.idKaryawan = b.id
+$sql = mysqli_query($konek,"select * from head_gajis
 ");
 $no=1;
 while($d= mysqli_fetch_array($sql)){
 echo 
 "<tr>
 <td width='40px' align='center'>$no</td>
-<td align='center'>$d[id_jabatan]</td>
-<td align='center'>$d[nama]</td>
-<td align='center'>$d[fungsional]</td>
-<td align='center'>$d[keluarga]</td>
-<td align='center'>$d[transport]</td>
+<td align='center'>$d[idKaryawan]</td>
+<td align='center'>$d[tglBuat]</td>
+<td align='center'>$d[idPotongan]</td>
+<td align='center'>$d[idGapok]</td>
 <td align='center'>$d[idTunjangan]</td>
-<td align='center'>$d[makanFas]</td>
-<td align='center'>$d[lemburUmum]</td>
-<td align='center'>$d[lemburKhusus]</td>
-<td align='center'>$d[bpjsKes]</td>
-<td align='center'>$d[bpjsKet]</td>
+<td align='center'>$d[total]</td>
 <td width='40px' align='center'>
 <a class='btn btn-warning btn-sm fa fa-edit' href='tunjangan.php?view=edit&id=$d[id]' ></a>
 <a class='btn btn-danger btn-sm fa fa fa-eraser' href='aksi_tunjangan.php?act=del&id=$d[id]'></a>
@@ -130,7 +120,7 @@ Peringatan<strong>Form Belum Lengkap</strong>
 <li class="list-inline-item seprate">
 <span>/</span>
 </li>
-<li class="list-inline-item">Tambah tunjangan</li>
+<li class="list-inline-item">Tambah Gaji</li>
 </ul>
 </div>
 </div>
@@ -143,12 +133,12 @@ Peringatan<strong>Form Belum Lengkap</strong>
 <div class="col-lg-11">
 <div class="card">
 <div class="card-header">
-<strong>tunjangan</strong>
+<strong>Gaji</strong>
 <small> Tambah</small>
 </div>
 <div style='margin-left:30px;'>
 <div class="card-body card-block row">
-<form method="post" action="aksi_tunjangan.php?act=insert" class="form-horizontal">
+<form method="post" action="aksi_gaji.php?act=insert" class="form-horizontal">
 </div>
     <table  width="900px">
       <tr>
@@ -158,10 +148,10 @@ Peringatan<strong>Form Belum Lengkap</strong>
         <option value=0>-Pilih-</option>
          <?php
          $konek = mysqli_connect("localhost","root","","payrol");
-    $result = mysqli_query($konek,"SELECT a.id as idJ,b.jumlah,a.fungsional,c.id as id,a.namajabatan,count(d.timeIn) as timeIn
-from jabatan a join karyawans c on a.namajabatan = c.jabatan
-join tuntams b on b.idKaryawan = c.id
-join kehadirans d on d.idKaryawan = b.idKaryawan 
+    $result = mysqli_query($konek,"SELECT (a.fungsional+a.keluarga+a.transport+a.idTunjangan+a.makanFas) as tunjangan,
+(b.zakat+b.Pinjaman+b.Kasbon+b.Lainlain+b.makan) as potongan ,d.gapok
+ from tunjangans a join potongans b on a.idKaryawan = b.idKaryawan join karyawans c on a.idKaryawan = c.id
+join jabatan d on d.namajabatan = c.jabatan
 ");   
  $jsArray = "var dtMhs = new Array();\n";       
     while ($row = mysqli_fetch_array($result)) {   
@@ -178,84 +168,39 @@ join kehadirans d on d.idKaryawan = b.idKaryawan
   <label for="fungsional" class=" form-control-label">Nama Jabatan</label>
       <input type="text" name="nama" id="nama" class="form-control"style="width: 400px"/>
     </div>  
-  <!-- <label for="id_jabatan" class=" form-control-label">Nama Jabatan</label> -->
-      <input type="text" name="id_jabatan" id="id_jabatan" class="form-control"hidden style="width: 400px"/>
-    </div>  
     </td>
     <td>
          <div class="form-group">
-  <label for="fungsional" class=" form-control-label">nama Fungsional</label>
-      <input type="text" name="fungsional" id="fungsional" class="form-control"style="width: 400px"/>
+  <label for="tglBuat" class=" form-control-label">Tanggal Buat</label>
+      <input type="text" name="tglBuat" id="tglBuat" class="form-control"style="width: 400px"/>
     </div>
     </td>
       </tr>
       <tr>
        <td>
         <div class="form-group">
-  <label for="keluarga" class=" form-control-label">keluarga</label>
-      <input type="number" name="keluarga" id="keluarga" class="form-control"style="width: 400px"/></td>
+  <label for="idPotongan" class=" form-control-label">Potongan</label>
+      <input type="number" name="idPotongan" id="idPotongan" class="form-control"style="width: 400px"/></td>
        <td>
         <div class="form-group">
-        <label for="Transport" class=" form-control-label">Transport</label>
-        <input type="number"name="Transport" id="Transport"  class="form-control" style="width: 400px"/>
+        <label for="idGapok" class=" form-control-label">Gaji Pokok</label>
+        <input type="number"name="idGapok" id="idGapok"  class="form-control" style="width: 400px"/>
         </td>
     </div>
       </tr>
        <tr>
        <td>
         <div class="form-group">
-  <label for="jumlah" class=" form-control-label">idTunjangan</label>
-      <input type="number" name="jumlah" id="jumlah" class="form-control"style="width: 400px"/></td>
+  <label for="idTunjangan" class=" form-control-label">Tunjangan</label>
+      <input type="number" name="idTunjangan" id="idTunjangan" class="form-control"style="width: 400px"/></td>
        <td>
         <div class="form-group">
-        <label for="makanFas" class=" form-control-label">makan </label>
-        <input type="number"name="makanFas" id="makanFas"  class="form-control" style="width: 400px"/>
+        <label for="total" class=" form-control-label">total </label>
+        <input type="number"name="total" id="total"  class="form-control" style="width: 400px"/>
         </td>
     </div>
       </tr>
-       <tr>
-       <td>
-        <div class="form-group">
-  <label for="lemburUmum" class=" form-control-label">lemburUmum</label>
-      <input type="number" name="lemburUmum" id="lemburUmum" class="form-control"style="width: 400px"/></td>
-       <td>
-        <div class="form-group">
-        <label for="lemburKhusus" class=" form-control-label">lemburKhusus</label>
-        <input type="number"name="lemburKhusus" id="lemburKhusus"  class="form-control" style="width: 400px"/>
-        </td>
-    </div>
-      </tr>
-       <tr>
-       <td>
-
-              <label for="bpjsKes" class="form-control-label">BPJS Kesehatan</label>
-
-                    <?php
-            $bpjs = mysqli_query($konek,"select *from bpjs_kes limit 1");
-            $bpjs1 =mysqli_fetch_array($bpjs);
-            $bpjskes=$bpjs1['angkaKaryawan']; 
-            ?>
-                 <select name="bpjsKes"  class="form-control-sm form-control" style="width: 400px">
-                     <option value="0">Please select</option>
-                     <option value=<?php echo $bpjskes; ?>>YA</option>
-                     <option value="0">TIDAK</option>
-                      </select>
-          </td>
-          <td>
-              <label for="bpjsKet" class="form-control-label">BPJS Ketenagakerjaan</label>
-            <?php
-            $bpjs = mysqli_query($konek,"select *from bpjs_kets limit 1");
-            $bpjs1 =mysqli_fetch_array($bpjs);
-            $bpjskes=$bpjs1['angkaKaryawan']; 
-            ?>
-                 <select name="bpjsKet"  class="form-control-sm form-control" style="width: 400px">
-                     <option value="0">Please select</option>
-                     <option value=<?php echo $bpjskes; ?>>YA</option>
-                     <option value="0">TIDAK</option>
-                      </select>
-          </td>
-    </div>
-      </tr>
+      
        
     </table>
 <div class="card-body">

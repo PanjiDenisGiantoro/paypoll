@@ -57,27 +57,28 @@ Error <strong>Proses Gagal</strong>
 <th align='center'>Nama Karyawan</th>
 <th align='center'>Tanggal Potongan</th>
 <th align='center'>Zakat</th>
-<th align='center'>idPinjaman</th>
-<th align='center'>idKasbon</th>
-<th align='center'>id Pinjaman Lain Lain</th>
+<th align='center'>Pinjaman</th>
+<th align='center'>Kasbon</th>
+<th align='center'>Pinjaman Lain Lain</th>
+<th align='center'>Makan</th>
 <th align='center'>BPJS Kesehatan</th>
 <th align='center'>BPJS Ketenagakerjaan </th>
 <th align='center' style="width: 100px;">Aksi</th>                                                                                    
 </tr>
 </thead>
 <?php
-$sql = mysqli_query($konek,"SELECT a.*, b.nama FROM potongans a JOIN karyawans b ON a.id = b.id");
+$sql = mysqli_query($konek,"SELECT a.*, b.nama FROM potongans a JOIN karyawans b ON a.idKaryawan = b.id");
 $no=1;
 while($d= mysqli_fetch_array($sql)){
 echo 
 "<tr>
 <td width='40px' align='center'>$no</td>
 <td align='center'>$d[nama]</td>
-<td align='center'>$d[tanggalPotongan]</td>
+<td align='center'>$d[tanggal_p]</td>
 <td align='center'>$d[zakat]</td>
-<td align='center'>$d[idPinjaman]</td>
-<td align='center'>$d[idKasbon]</td>
-<td align='center'>$d[idLainlain]</td>
+<td align='center'>$d[Pinjaman]</td>
+<td align='center'>$d[Kasbon]</td>
+<td align='center'>$d[Lainlain]</td>
 <td align='center'>$d[makan]</td>
 <td align='center'>$d[bpjsKes]</td>
 <td align='center'>$d[bpjsKet]</td>
@@ -202,12 +203,32 @@ Peringatan<strong>Form Belum Lengkap</strong>
       </tr>
       <tr>
           <td>
+
               <label for="bpjsKes" class="form-control-label">BPJS Kesehatan</label>
-                  <input type="number"name="bpjsKes" id="bpjsKes"  class="form-control" style="width: 400px"/>
+
+                    <?php
+            $bpjs = mysqli_query($konek,"select *from bpjs_kes limit 1");
+            $bpjs1 =mysqli_fetch_array($bpjs);
+            $bpjskes=$bpjs1['angkaKaryawan']; 
+            ?>
+                 <select name="bpjsKes"  class="form-control-sm form-control" style="width: 400px">
+                     <option value="0">Please select</option>
+                     <option value=<?php echo $bpjskes; ?>>YA</option>
+                     <option value="0">TIDAK</option>
+                      </select>
           </td>
           <td>
               <label for="bpjsKet" class="form-control-label">BPJS Ketenagakerjaan</label>
-                  <input type="number"name="bpjsKet" id="bpjsKet"  class="form-control" style="width: 400px"/>
+            <?php
+            $bpjs = mysqli_query($konek,"select *from bpjs_kets limit 1");
+            $bpjs1 =mysqli_fetch_array($bpjs);
+            $bpjskes=$bpjs1['angkaKaryawan']; 
+            ?>
+                 <select name="bpjsKet"  class="form-control-sm form-control" style="width: 400px">
+                     <option value="0">Please select</option>
+                     <option value=<?php echo $bpjskes; ?>>YA</option>
+                     <option value="0">TIDAK</option>
+                      </select>
           </td>
       </tr>
       <tr>
@@ -288,36 +309,80 @@ $kodeBarang = $noUrut;
 <div class="card-body card-block row">
 <form action="aksi_kasbon.php?act=update" method="post" class="form-horizontal">
 </div>
-  <table  width="900px">
-       <tr>
+   <table  width="900px">
+      <tr>
         <td>
-            <div class="form-group">
-                <label for="idKaryawan" class=" form-control-label">Id Karyawan</label>
-           <input type="text" name="idKaryawan" id="idKaryawan" value="<?php echo $e['idKaryawan']?>" readonly class="form-control"style="width: 400px"/>
+        <div class="form-group">
+  <label for="idKaryawan" class=" form-control-label">Id Karyawan</label>
+       <select name="idKaryawan" id="idKaryawan" class=" form-control" onchange="changeValue(this.value)" style="width: 400px" >
+        <option value=0>-Pilih-</option>
+         <?php
+         $konek = mysqli_connect("localhost","root","","payrol");
+    $result = mysqli_query($konek,"
+                       
+ SELECT a.nama , a.id,sum(b.jumlahKasbon) as jumlahKasbon,c.jumlah,d.sisaPinjaman,e.namajabatan,e.gapok  
+                        FROM karyawans a JOIN kasbons b ON  a.id = b.idKaryawan
+                        JOIN lainlains c ON c.idKaryawan = a.id
+                        JOIN pinjamen d ON d.idKaryawan = a.id
+                        JOIN jabatan e ON a.jabatan = e.namajabatan 
+");   
+    $jsArray = "var dtMhs = new Array();\n";       
+    while ($row = mysqli_fetch_array($result)) {   
+        echo '<option value="'.$row['id'].'">'.$row['id'].'</option>';   
+        $jsArray .= "dtMhs['".$row['id']."'] = {nama:'".addslashes($row['nama'])."',jumlahKasbon:'".addslashes($row['jumlahKasbon'])."',sisaPinjaman:'".addslashes($row['sisaPinjaman'])."',jumlah:'".addslashes($row['jumlah'])."',gapok:'".$row['gapok']."'};\n";
+    }     
+    ?>   
+        </select>
+    </div>  
     </td>
     <td>
-         <div class="form-group">
-  <label for="id" class=" form-control-label">Nama Karyawan</label>
-      <input type="text" name="nama" id="nama" value="<?php echo $e['nama']?>" class="form-control" readonly style="width: 400px"/>
+              <div class="form-group">
+  <label for="nama" class=" form-control-label">Nama Karyawan</label>
+      <input type="text" name="nama" id="nama" class="form-control"style="width: 400px"/>
+    </div>
     </td>
       </tr>
       <tr>
        <td>
         <div class="form-group">
-  <label for="jumlahKasbon" class=" form-control-label">jumlah Kasbon</label>
-      <input type="number" name="jumlahKasbon" id="jumlahKasbon" value="<?php echo $e['jumlahKasbon']?>"  class="form-control"style="width: 400px"/></td>
+  <label for="tanggalPotongan" class=" form-control-label">Tanggal Potongan</label>
+      <input type="date" name="tanggalPotongan" id="tanggalPotongan"  value="<?php echo date('Y-m-d') ?>" class="form-control"style="width: 400px"/></td>
        <td>
         <div class="form-group">
-        <label for="TanggalKasbon" class=" form-control-label">Tanggal Kasbon</label>
-        <input type="date"name="TanggalKasbon" id="TanggalKasbon" value="<?php echo $e['tgl']?>" class="form-control" style="width: 400px"/>
+        <label for="gapok" class=" form-control-label">Zakat</label>
+        <input type="number"name="gapok" id="gapok"  class="form-control" style="width: 400px"/>
         </td>
     </div>
-     
+      </tr>
+      <tr>
       <tr>
           <td>
-              <label for="keterangan" class="form-control-label">Keterangan</label>
-              <textarea rows="5" class="form-control" id="keterangan" name="keterangan" style="width: 400px"><?php echo $e['keterangan']?>
-              </textarea>
+                  <label for="makan" class="form-control-label">makan</label>
+                  <input type="number"name="makan" id="makan"  class="form-control" style="width: 400px"/>
+          </td>
+          <td>
+              <label for="sisaPinjaman" class="form-control-label">Biaya Pinjaman</label>
+                  <input type="number"name="sisaPinjaman" id="sisaPinjaman"  class="form-control" style="width: 400px"/>
+          </td>
+      </tr>
+      <tr>
+          <td>
+              <label for="bpjsKes" class="form-control-label">BPJS Kesehatan</label>
+                  <input type="number"name="bpjsKes" id="bpjsKes"  class="form-control" style="width: 400px"/>
+          </td>
+          <td>
+              <label for="bpjsKet" class="form-control-label">BPJS Ketenagakerjaan</label>
+                  <input type="number"name="bpjsKet" id="bpjsKet"  class="form-control" style="width: 400px"/>
+          </td>
+      </tr>
+      <tr>
+          <td>
+              <label for="jumlahKasbon" class="form-control-label">biaya Kasbon</label>
+                  <input type="number"name="jumlahKasbon" id="jumlahKasbon"  class="form-control" style="width: 400px"/>
+          </td>
+          <td>
+              <label for="jumlah" class="form-control-label">Pinjaman Lain lain</label>
+                  <input type="number"name="jumlah" id="jumlah"  class="form-control" style="width: 400px"/>
           </td>
       </tr>
     </table>
@@ -325,6 +390,16 @@ $kodeBarang = $noUrut;
 <input type="submit" class="btn btn-primary" value="simpan">
 <a class="btn btn-danger" href="kasbon.php">kembali</a>
 </div>
+<script type="text/javascript">   
+    <?php echo $jsArray; ?> 
+    function changeValue(id){ 
+    document.getElementById('nama').value = dtMhs[id].nama;
+    document.getElementById('jumlahKasbon').value = dtMhs[id].jumlahKasbon;
+    document.getElementById('sisaPinjaman').value = dtMhs[id].sisaPinjaman;
+    document.getElementById('jumlah').value = dtMhs[id].jumlah;
+    document.getElementById('gapok').value = dtMhs[id].gapok * 0.025;
+    }; 
+    </script>
 </div>
 </div>
 </form>

@@ -60,7 +60,7 @@ Error <strong>Proses Gagal</strong>
 </tr>
 </thead>
 <?php
-$sql = mysqli_query($konek,"SELECT a.nama AS nama,b.idKaryawan AS idKaryawan,b.keterangan AS keterangan,a.id AS id,b.tgl AS tgl,b.`jumlahKasbon` AS `jumlahKasbon` FROM karyawans a JOIN kasbons b ON a.id = b.idKaryawan");
+$sql = mysqli_query($konek,"SELECT b.id as id ,a.nama AS nama,b.idKaryawan AS idKaryawan,b.keterangan AS keterangan,a.id AS ids,b.tgl AS tgl,b.`jumlahKasbon` AS `jumlahKasbon` FROM karyawans a JOIN kasbons b ON a.id = b.idKaryawan");
 $no=1;
 while($d= mysqli_fetch_array($sql)){
 echo 
@@ -70,7 +70,6 @@ echo
 <td align='center'>$d[tgl]</td>
 <td width='50px' align='center'>
 <a class='btn btn-warning btn-sm fa fa-edit' href='kasbon.php?view=edit&id=$d[id]' ></a>
-<a class='btn btn-warning btn-sm fa fa-edit' href='kasbon.php?view=edit1&id=$d[id]' ></a>
 <a class='btn btn-danger btn-sm fa fa fa-eraser' href='aksi_kasbon.php?act=del&id=$d[id]'></a>
 </td>
 </tr>";
@@ -149,7 +148,9 @@ Peringatan<strong>Form Belum Lengkap</strong>
     $jsArray = "var dtMhs = new Array();\n";       
     while ($row = mysqli_fetch_array($result)) {   
         echo '<option value="'.$row['id'].'">'.$row['id'].'</option>';   
-        $jsArray .= "dtMhs['".$row['id']."'] = {nama:'".addslashes($row['nama'])."'};\n";   
+        $jsArray .= "dtMhs['".$row['id']."'] = {
+          nama:'".addslashes($row['nama'])."'
+        };\n";   
     }     
     ?>   
         </select>
@@ -205,7 +206,7 @@ Peringatan<strong>Form Belum Lengkap</strong>
 <?php
 break;
 case "edit";
-$sqlEdit = mysqli_query($konek,"select * from kasbons a join karyawans b on a.idKaryawan = b.id where a.idKaryawan='$_GET[id]'");
+$sqlEdit = mysqli_query($konek,"select * from kasbons a join karyawans b on a.idKaryawan = b.id where a.id='$_GET[id]'");
 $e = mysqli_fetch_array($sqlEdit);
 $query = "SELECT max(id) as id FROM pinjamen";
 $hasil = mysqli_query($konek,$query);
@@ -319,27 +320,37 @@ $kodeBarang = $noUrut;
               <label for="keterangan" class="form-control-label">Keterangan</label>
               <textarea rows="5" class="form-control" id="keterangan" name="keterangan" style="width: 400px"><?php echo $e['keterangan']?>
               </textarea>
-               <input type="text" id="buah" name="buah" placeholder="Nama Buah" value="">
           </td>
       </tr>
     </table>
 <div class="card-body">
 <input type="submit" class="btn btn-primary" value="simpan">
 <a class="btn btn-danger" href="kasbon.php">kembali</a>
-<input type="checkbox" name="sitem" id="sitem" style="width: 50px;height:40px;" checked="true" >
+<input type="checkbox" id="sitem" name="sitem"  style="width: 30px;height: 30px;" >
+          <span>Mode Edit</span>
 <script type="text/javascript">
   
-     $(document).ready(function() {
-                // Selector input yang akan menampilkan autocomplete.
-                $( "#buah" ).autocomplete({
-                    serviceUrl: "json/json_karyawan.php",   // Kode php untuk prosesing data.
-                    dataType: "JSON",           // Tipe data JSON.
-                    onSelect: function (suggestion) {
-                        $( "#buah" ).val("" + suggestion.buah);
+     $(function () {
+                $( "#jumlahKasbon" ).prop( "disabled", true );
+                 $( "#TanggalKasbon" ).prop( "disabled", true );
+                 $( "#keterangan" ).prop( "disabled", true );
+                 $('#sitem').change(function(){
+                    if ($(this).is(':checked')) {
+                       $( "#jumlahKasbon" ).prop( "disabled", false );
+                 $( "#TanggalKasbon" ).prop( "disabled", false );
+                 $( "#keterangan" ).prop( "disabled", false );
+                       $( "#jumlahKasbon" ).prop( "clear", true );
+                       $( "#TanggalKasbon" ).prop( "clear", true );
+                       $( "#keterangan" ).prop( "clear", true );
+                    }else if(!$(this).is(':checked')){
+                        $( "#jumlahKasbon" ).prop( "disabled", true );
+                 $( "#TanggalKasbon" ).prop( "disabled", true );
+                 $( "#keterangan" ).prop( "disabled", true );
                     }
                 });
-            })
-</script>
+               });
+ 
+    </script>
 </div>
 </div>
 </div>

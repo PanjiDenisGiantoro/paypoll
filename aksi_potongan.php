@@ -14,6 +14,7 @@ if($_GET['act'] =='insert'){
 	$idLainlain = $_POST['jumlah'];
 	$makan = $_POST['makan'];
 	$bpjsKes = $_POST['bpjsKes'];
+	$idKaryawan = $_POST['idKaryawan'];
 	$bpjsKet = $_POST['bpjsKet'];
 	$tanggalPotongan = $_POST['tanggalPotongan'];
 
@@ -21,28 +22,29 @@ if($_GET['act'] =='insert'){
 		
 		header('location:potongan.php?view=tambah&e=bl');
 	}else{
-		$simpan = mysqli_query($konek,"insert into potongans(zakat,Pinjaman,Kasbon,Lainlain,makan,bpjsKes,bpjsKet,tanggal_p) values ($zakat','$idPinjaman','$idKasbon','$idLainlain','$makan','$bpjsKes','$bpjsKet','$tanggalPotongan')");
+		$simpan = mysqli_query($konek,"insert into potongans(zakat,Pinjaman,Kasbon,Lainlain,makan,bpjsKes,bpjsKet,tanggal_p,idKaryawan) values ('$zakat','$idPinjaman','$idKasbon','$idLainlain','$makan','$bpjsKes','$bpjsKet','$tanggalPotongan','$idKaryawan')");
 		if($simpan){
 			header('location:potongan.php?e=sukses');
 		}else{
-			// echo var_dump("insert into potongans(zakat,Pinjaman,Kasbon,Lainlain,makan,bpjsKes,bpjsKet) values ('$zakat','$idPinjaman','$idKasbon','$idLainlain','$makan','$bpjsKes','$bpjsKet')");die();
 			header('location:potongan.php?e=gagal');
 		}
 	}
 }
 else if ($_GET['act']=='update'){
 $id = $_POST['id'];
-	$zakat = $_POST['zakat'];
-	$idPinjaman = $_POST['idPinjaman'];
-	$idKasbon = $_POST['idKasbon'];
-	$idLainlain = $_POST['idLainlain'];
+	$zakat = $_POST['gapok'];
+	$idPinjaman = $_POST['sisaPinjaman'];
+	$idKasbon = $_POST['jumlahKasbon'];
+	$idLainlain = $_POST['jumlah'];
 	$makan = $_POST['makan'];
 	$bpjsKes = $_POST['bpjsKes'];
+	$idKaryawan = $_POST['idKaryawan'];
 	$bpjsKet = $_POST['bpjsKet'];
+	$tanggalPotongan = $_POST['tanggalPotongan'];
 	if( $zakat==''||$idPinjaman==''||$idKasbon==''||$idLainlain==''||$makan==''||$bpjsKes==''||$bpjsKet==''){
 		header('location:potongan.php?view=tambah&e=bl');
 	}else{
-		$update = mysqli_query($konek,"update potongans set zakat='$zakat',Pinjaman='$idPinjaman',Kasbon='$idKasbon',Lainlain='$idLainlain',makan='$makan',bpjsKes='$bpjsKes',bpjsKet='bpjsKet',tanggalPotongan = '$tanggalPotongan' where id='$id'");
+		$update = mysqli_query($konek,"update potongans set zakat='$zakat',Pinjaman='$idPinjaman',Kasbon='$idKasbon',Lainlain='$idLainlain',makan='$makan',bpjsKes='$bpjsKes',bpjsKet='bpjsKet',tanggalPotongan = '$tanggalPotongan',idKaryawan='$idKaryawan' where id='$id'");
 		if($update){
 			header('location:potongan.php?e=sukses');
 		}else{

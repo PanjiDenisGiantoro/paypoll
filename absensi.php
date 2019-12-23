@@ -55,27 +55,27 @@ Error <strong>Proses Gagal</strong>
 <tr>
 
 <th align='center'>No</th>
-<th align='center'>Id Karyawan</th>
 <th align='center'>Nama Karyawan</th>
 <th align='center'>Jabatan</th>
 <th align='center'>Tanggal Absen</th>
 <th align='center'>Keterangan</th>
+<th align='center'>Gambar</th>
 <th align='center' style="width: 100px;">Aksi</th>                                                                                                
 </tr>
 </thead>
 <?php
 
-$sql = mysqli_query($konek,"SELECT b.id as id, a.nama as nama ,a.jabatan as jabatan ,b.idKaryawan as idKaryawan,b.tglAbsen as tglAbsen,b.keterangan as keterangan,a.id as ids from karyawans a join absens b on a.id = b.idKaryawan  ");
+$sql = mysqli_query($konek,"SELECT b.id as id, a.nama as nama ,a.jabatan as jabatan ,b.idKaryawan as idKaryawan,b.tglAbsen as tglAbsen,b.keterangan as keterangan,a.id as ids,b.Gambar as Gambar  from karyawans a join absens b on a.id = b.idKaryawan  ");
 $no=1;
 while($d= mysqli_fetch_array($sql)){
 echo 
 "<tr>
 <td width='40px' align='center'>$no</td>
-<td align='center'>$d[idKaryawan]</td>
 <td align='center'>$d[nama]</td>
 <td align='center'>$d[jabatan]</td>
 <td align='center'>$d[tglAbsen]</td>
 <td align='center'>$d[keterangan]</td>
+<td align ='center'><img src='img/".$d['Gambar']."' width='100' height='100'></td>
 <td width='40px' align='center'>
 <a class='btn btn-warning btn-sm fa fa-edit' href='absensi.php?view=edit&id=$d[id]' ></a>
 <a class='btn btn-danger btn-sm fa fa fa-eraser' href='aksi_absensi.php?act=del&id=$d[id]'></a>
@@ -388,7 +388,7 @@ function openCity(evt, cityName) {
 <?php
 break;
 case "edit";
-$sqlEdit = mysqli_query($konek,"select * from absens a join karyawans b on a.idKaryawan = b.id where a.idKaryawan='$_GET[id]'");
+$sqlEdit = mysqli_query($konek,"select * from absens a join karyawans b on a.idKaryawan = b.id where a.id='$_GET[id]'");
 $e = mysqli_fetch_array($sqlEdit);
 $query = "SELECT max(id) as id FROM karyawans";
 $hasil = mysqli_query($konek,$query);
@@ -433,44 +433,51 @@ $kodeBarang = $char . sprintf("%03s", $noUrut);
 </div>
 <div style='margin-left:30px;'>
 <div class="card-body card-block row">
-<form action="aksi_absensi.php?act=update" method="post" class="form-horizontal">
-</div>
-  <table  width="900px">
-      <tr>
-        <td>
+
+   <form method="post"  action="aksi_absensi.php?act=update"  enctype="multipart/form-data" class="form-horizontal">
+        <table>
+          <tr>
+           <td>
             <div class="form-group">
                 <label for="idKaryawan" class=" form-control-label">Id Karyawan</label>
-            <input type="text" name="idKaryawan" value="<?php echo $e['idKaryawan']?>"readonly  placeholder="Masukkan Nama Karyawan" class="form-control"style="width: 400px">
+           <input type="text" name="idKaryawan" id="idKaryawan" value="<?php echo $e['idKaryawan']?>" readonly class="form-control"style="width: 300px"/>
     </td>
     <td>
-<div class="form-group">
-<label for="tglAbsen" class=" form-control-label">Tanggal Absen</label>
-<input type="date" name="tglAbsen"  value="<?php  echo $e['tglAbsen']?>" placeholder="Masukkan Tanggal Absen Anda" class="form-control"style="width: 400px" >
-</div>
-</td>
-   
-      </tr>
-      <tr>
-        <td>
-        <div class="form-group">
+         <div class="form-group">
   <label for="id" class=" form-control-label">Nama Karyawan</label>
-      <input type="text" name="nama" id="nama" value="<?php echo $e['nama']?>" readonly class="form-control"style="width: 400px"/>
-        </td>
-       <td>
-        <div class="form-group">
-  <label for="id" class=" form-control-label">jabatan Karyawan</label>
-      <input type="text" name="jabatan" id="jabatan" value="<?php echo $e['jabatan']?>"readonly class="form-control"style="width: 400px"/>
-  </td>
+      <input type="text" name="nama" id="nama" value="<?php echo $e['nama']?>" class="form-control" readonly style="width: 300px"/>
+    </td>
+          </tr>
+            <tr>
+               <td>
+               <div class="form-group">
+        <label for="tgl" class=" form-control-label">Tanggal Kasbon</label>
+        <input type="date"name="tgl" id="tgl" value="<?php echo $e['tglAbsen']?>" class="form-control" style="width: 300px"/>
+      </div>
+               </td>
+               <td>
+                 <div class="form-group">
+  <label for="foto" class=" form-control-label">Upload Gambar</label>
+  
+      <input type="file" name="foto" id="foto" class="form-control"style="width: 300px"/>
+
     </div>
-      </tr>
-      <tr>
-        <td>
-        <div class="form-group">
-        <label for="keterangan" class=" form-control-label">keterangan absen</label>
-        <textarea name="keterangan" id="keterangan"rows="9" placeholder="Content..." class="form-control" style="width: 400px"><?php echo $e['keterangan']?></textarea>
-        </td>
-      </tr>
-    </table>
+               </td>
+               <td>
+                  <input type="checkbox" name="ubah_foto" value="true"> Ceklis jika ingin mengubah foto
+               </td>
+            </tr>
+            <tr>
+                <td>   <div class="form-group">
+              <label for="Keterangan" class=" form-control-label">Keterangan</label>
+              <textarea rows="text"name="Keterangan" id="Keterangan"  class="form-control" style="width: 300px"><?php echo $e['nama']?></textarea> 
+              </td>
+              </textarea></td>
+       
+            </tr>
+               </div>
+           
+        </table>
     
 <div class="card-body">
 <input type="submit" class="btn btn-primary" value="simpan">
@@ -486,4 +493,3 @@ break;
 ?>
 
 <?php include"footer.php";?>
-

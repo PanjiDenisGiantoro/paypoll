@@ -37,12 +37,7 @@ if(isset($_GET['e']) && $_GET['e']=='sukses'){
 <div class="alert alert-success" role="alert" style="margin-top: 30px">
 Selamat <strong>Proses Berhasil</strong>
 </div>
-<?php 
-}else if(isset($_GET['e']) && $_GET['e']=='hutang'){
-?>
-<div class="alert alert-danger" role="alert"  style="margin-top: 30px">
-Error <strong>Belum Lunas</strong>
-</div>
+
 <?php
 }else if(isset($_GET['e']) && $_GET['e']=='gagal'){
 ?>
@@ -53,33 +48,33 @@ Error <strong>Proses Gagal</strong>
 <?php
 }
 ?>
-<a href="pinjaman.php?view=tambah" class="btn btn-primary" style="float: right; margin-right: 30px ; margin-top: 40px" >Tambah Data Pinjaman Karyawan</a>
+<a href="tuntam.php?view=tambah" class="btn btn-primary" style="float: right; margin-right: 30px ; margin-top: 40px" >Tambah Data kasbon Karyawan</a>
 <table  class="table " >
 </div>
 <thead>
 <tr>
 <th align='center'>No</th>
 <th align='center'>Nama Karyawan</th>
-<th align='center'>Jumlah Pinjaman</th>
-<th align='center'>Sisa Pinjaman</th>
-<th align='center'>Tanggal Pinjam</th>
+<th align='center'>Tanggal Absen</th>
 <th align='center' style="width: 100px;">Aksi</th>                                                                                    
 </tr>
 </thead>
 <?php
-$sql = mysqli_query($konek,"SELECT b.id as i ,a.nama AS nama,b.idKaryawan AS idKaryawan,a.id AS id,b.tgl AS tgl,b.`jumlahPinjam` AS `jumlahPinjam`,b.sisaPinjaman AS sisaPinjaman FROM karyawans a JOIN pinjamen b ON a.id = b.idKaryawan");
+$sql = mysqli_query($konek,"
+
+SELECT b.id as id ,a.nama AS nama,b.idKaryawan AS idKaryawan,b.keterangan AS keterangan
+,a.id AS ids,b.tanggal AS tgl,b.`jumlah` AS `jumlah` 
+FROM karyawans a JOIN tuntams b ON a.id = b.idKaryawan");
 $no=1;
 while($d= mysqli_fetch_array($sql)){
 echo 
 "<tr>
 <td width='40px' align='center'>$no</td>
 <td align='center'>$d[nama]</td>
-<td align='center'>$d[jumlahPinjam]</td>
-<td align='center'>$d[sisaPinjaman]</td>
 <td align='center'>$d[tgl]</td>
-<td width='40px' align='center'>
-<a class='btn btn-warning btn-sm fa fa-edit' href='pinjaman.php?view=edit&id=$d[i]' ></a>
-<a class='btn btn-danger btn-sm fa fa fa-eraser' href='aksi_pinjaman.php?act=del&id=$d[i]'></a>
+<td width='50px' align='center'>
+<a class='btn btn-warning btn-sm fa fa-edit' href='tuntam.php?view=edit&id=$d[id]' ></a>
+<a class='btn btn-danger btn-sm fa fa fa-eraser' href='aksi_tuntam.php?act=del&id=$d[id]'></a>
 </td>
 </tr>";
 $no++;
@@ -95,8 +90,11 @@ $no++;
 break;
 case "tambah";  
 
+
 ?>
 <?php
+
+
 if(isset($_GET['e']) && $_GET['e']=='bl'){
  ?>
 <div class="alert alert-danger" role="alert">
@@ -104,6 +102,7 @@ Peringatan<strong>Form Belum Lengkap</strong>
 </div>
  <?php
 }
+
 ?>
 <section class="au-breadcrumb m-t-75">
 <div class="section__content section__content--p30">
@@ -120,7 +119,7 @@ Peringatan<strong>Form Belum Lengkap</strong>
 <li class="list-inline-item seprate">
 <span>/</span>
 </li>
-<li class="list-inline-item">Tambah pinjaman</li>
+<li class="list-inline-item">Tambah Kasbon</li>
 </ul>
 </div>
 </div>
@@ -133,18 +132,18 @@ Peringatan<strong>Form Belum Lengkap</strong>
 <div class="col-lg-11">
 <div class="card">
 <div class="card-header">
-<strong>pinjaman</strong>
+<strong>Tunjangan Tambahan</strong>
 <small> Tambah</small>
 </div>
 <div style='margin-left:30px;'>
 <div class="card-body card-block row">
-<form method="post" action="aksi_pinjaman.php?act=insert" class="form-horizontal">
+<form method="post" action="aksi_tuntam.php?act=insert" class="form-horizontal">
 </div>
     <table  width="900px">
       <tr>
         <td>
             <div class="form-group">
-                <label for="idKarjumlahPinjam" class=" form-control-label">Id Karyawan</label>
+                <label for="idKaryawan" class=" form-control-label">Id Karyawan</label>
             <select name="idKaryawan" id="idKaryawan" class=" form-control" onchange="changeValue(this.value)" style="width: 400px" >
         <option value=0>-Pilih-</option>
          <?php
@@ -160,27 +159,35 @@ Peringatan<strong>Form Belum Lengkap</strong>
     </td>
     <td>
          <div class="form-group">
-  <label for="nama" class=" form-control-label">Nama Karyawan</label>
+  <label for="id" class=" form-control-label">Nama Karyawan</label>
       <input type="text" name="nama" id="nama" class="form-control"style="width: 400px"/>
-       <div class="form-group">
-  <label for="id" class=" form-control-label" hidden>Nama Karyawan</label>
-      <input type="text" name="id" id="id" hidden class="form-control"style="width: 400px"/>
     </td>
       </tr>
       <tr>
        <td>
         <div class="form-group">
-  <label for="jumlahPinjam" class=" form-control-label">jumlah pinjam</label>
-      <input type="number" name="jumlahPinjam" id="jumlahPinjam" class="form-control"style="width: 400px"/></td>
-
+  <label for="jumlah" class=" form-control-label">jumlah Tunjangan Tambahan</label>
+      <input type="number" name="jumlah" id="jumlah" class="form-control"style="width: 400px"/></td>
+       <td>
+        <div class="form-group">
+        <label for="tanggal" class=" form-control-label">Tanggal Kasbon</label>
+        <input type="date"name="tanggal" id="tanggal" value="<?php echo date('Y-m-d') ?>" class="form-control" style="width: 400px"/>
+        </td>
     </div>
       </tr>
       <tr>
       <tr>
           <td>
-                  <label for="tgl" class="form-control-label">Tanggal Pinjam</label>
-                  <input name="tgl" type="date" class="form-control" id="tgl"  value="<?php echo date('Y-m-d') ?>" style="width: 400px"/>
-                  
+                  <label for="keterangan" class="form-control-label">Keterangan</label>
+                  <textarea rows="5" class="form-control" id="keterangan" name="keterangan" style="width: 400px">
+                  </textarea>
+          </td>
+          <td>
+            
+         <div class="form-group">
+  <label for="id" class=" form-control-label">Nama Karyawan</label>
+      <!-- <input type="text" name="nama" id="nama" class="form-control"style="width: 400px"/> -->
+       <input type="text" id="buah" name="buah" placeholder="Nama Buah" value="">
           </td>
       </tr>
     </table>
@@ -192,19 +199,16 @@ Peringatan<strong>Form Belum Lengkap</strong>
     </script>
 <div class="card-body">
 <input type="submit" class="btn btn-primary" value="simpan">
-<a class="btn btn-danger" href="pinjaman.php">kembali</a>
+<a class="btn btn-danger" href="kasbon.php">kembali</a>
 </div>
-
-</table>
+</div>
+</div>
 </form>
 </div>
-
-
 <?php
 break;
 case "edit";
-$sqlEdit = mysqli_query($konek,"SELECT a.id,a.idKaryawan,b.nama,a.jumlahPinjam,a.sisaPinjaman,a.tgl FROM pinjamen a JOIN karyawans b ON a.idKaryawan = b.id 
- where a.id='$_GET[id]'");
+$sqlEdit = mysqli_query($konek,"select * from tuntams a join karyawans b on a.idKaryawan = b.id where a.id='$_GET[id]'");
 $e = mysqli_fetch_array($sqlEdit);
 $query = "SELECT max(id) as id FROM pinjamen";
 $hasil = mysqli_query($konek,$query);
@@ -230,7 +234,7 @@ $kodeBarang = $noUrut;
 <li class="list-inline-item seprate">
 <span>/</span>
 </li>
-<li class="list-inline-item">Edit Pinjaman Karyawan</li>
+<li class="list-inline-item">Edit Tunjangan tambahan</li>
 </ul>
 </div>
 </div>
@@ -243,12 +247,50 @@ $kodeBarang = $noUrut;
 <div class="col-lg-11">
 <div class="card">
 <div class="card-header">
-<strong>Pinjaman</strong>
+<strong>Tunjangan Tambahan</strong>
 <small> edit</small>
 </div>
+<style type="text/css">
+   input[type=text] {
+                border: 2px solid #bdbdbd;
+                font-family: 'Roboto', Arial, Sans-serif;
+                font-size: 15px;
+                font-weight: 400;
+                padding: .5em .75em;
+                width: 300px;
+            }
+            input[type=text]:focus {
+                border: 2px solid #757575;
+                outline: none;
+            }
+            .autocomplete-suggestions {
+                border: 1px solid #999;
+                background: #FFF;
+                overflow: auto;
+            }
+            .autocomplete-suggestion {
+                padding: 2px 5px;
+                white-space: nowrap;
+                overflow: hidden;
+            }
+            .autocomplete-selected {
+                background: #F0F0F0;
+            }
+            .autocomplete-suggestions strong {
+                font-weight: normal;
+                color: #3399FF;
+            }
+            .autocomplete-group {
+                padding: 2px 5px;
+            }
+            .autocomplete-group strong {
+                display: block;
+                border-bottom: 1px solid #000;
+            }
+</style>
 <div style='margin-left:30px;'>
 <div class="card-body card-block row">
-<form action="aksi_pinjaman.php?act=update" method="post" class="form-horizontal">
+<form action="aksi_tuntam.php?act=update" method="post" class="form-horizontal">
 </div>
   <table  width="900px">
        <tr>
@@ -266,58 +308,59 @@ $kodeBarang = $noUrut;
       <tr>
        <td>
         <div class="form-group">
-  <label for="jumlahPinjam" class=" form-control-label">jumlah Pinjam</label>
-      <input type="number" name="jumlahPinjam" id="jumlahPinjam" value="<?php echo $e['jumlahPinjam']?>"  class="form-control"style="width: 400px"/></td>
+  <label for="jumlah" class=" form-control-label">jumlah Tunjangan Tambahan</label>
+      <input type="number" name="jumlah" id="jumlah" value="<?php echo $e['jumlah']?>"  class="form-control"style="width: 400px"/></td>
        <td>
         <div class="form-group">
-        <label for="sisaPinjaman" class=" form-control-label">Sisa Pinjam</label>
-        <input type="number"name="sisaPinjaman" id="sisaPinjaman" value="<?php echo $e['sisaPinjaman']?>" class="form-control" style="width: 400px"/>
+        <label for="tanggal" class=" form-control-label">Tanggal </label>
+        <input type="date"name="tanggal" id="tanggal" value="<?php echo $e['tanggal']?>" class="form-control" style="width: 400px"/>
         </td>
     </div>
      
       <tr>
           <td>
-              <label for="tgl" class="form-control-label">Tanggal Pinjam</label>
-              <input class="form-control" id="tgl" name="tgl" value="<?php echo $e['tgl']?>" style="width: 400px"/>
+              <label for="keterangan" class="form-control-label">Keterangan</label>
+              <textarea rows="5" class="form-control" id="keterangan" name="keterangan" style="width: 400px"><?php echo $e['keterangan']?>
+              </textarea>
           </td>
       </tr>
     </table>
 <div class="card-body">
 <input type="submit" class="btn btn-primary" value="simpan">
-<a class="btn btn-danger" href="pinjaman.php">kembali</a>
+<a class="btn btn-danger" href="kasbon.php">kembali</a>
 <input type="checkbox" id="sitem" name="sitem"  style="width: 30px;height: 30px;" >
           <span>Mode Edit</span>
-</div>
 <script type="text/javascript">
-   $(function () {
-                $( "#jumlahPinjam" ).prop( "disabled", true );
-                 $( "#tgl" ).prop( "disabled", true );
-                 $( "#sisaPinjaman" ).prop( "disabled", true );
+  
+     $(function () {
+                $( "#jumlah" ).prop( "disabled", true );
+                 $( "#tanggal" ).prop( "disabled", true );
+                 $( "#keterangan" ).prop( "disabled", true );
                  $('#sitem').change(function(){
                     if ($(this).is(':checked')) {
-                      $( "#jumlahPinjam" ).prop( "disabled", false );
-                 $( "#tgl" ).prop( "disabled", false );
-                 $( "#sisaPinjaman" ).prop( "disabled", false );
+                       $( "#jumlah" ).prop( "disabled", false );
+                 $( "#tanggal" ).prop( "disabled", false );
+                 $( "#keterangan" ).prop( "disabled", false );
                        $( "#jumlah" ).prop( "clear", true );
-                       $( "#tgl" ).prop( "clear", true );
+                       $( "#tanggal" ).prop( "clear", true );
                        $( "#keterangan" ).prop( "clear", true );
                     }else if(!$(this).is(':checked')){
-                        $( "#jumlahPinjam" ).prop( "disabled", true );
-                 $( "#tgl" ).prop( "disabled", true );
-                 $( "#sisaPinjaman" ).prop( "disabled", true );
+                        $( "#jumlah" ).prop( "disabled", true );
+                 $( "#tanggal" ).prop( "disabled", true );
+                 $( "#keterangan" ).prop( "disabled", true );
                     }
                 });
                });
  
-   
-</script>
+    </script>
+</div>
 </div>
 </div>
 </form>
+
 </div>
 <?php
 break;
 }
 ?>
 <?php include"footer.php";?>
-

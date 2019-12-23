@@ -86,7 +86,7 @@ include "koneksi/koneksi.php";
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                  
                                 <li>
-                                    <a href="Jabatan.php">
+                                    <a href="gaji.php">
                                         <i class="far fa-check-square"></i>Gaji</a>
                                 </li>
                                 <li>
@@ -94,7 +94,7 @@ include "koneksi/koneksi.php";
                                         <i class="fas fa-calendar-alt"></i>Tunjangan</a>
                                 </li>
                                 <li>
-                                    <a href="map.html">
+                                    <a href="tuntam.php">
                                         <i class="fas fa-map-marker-alt"></i>Tunjangan Tambahan</a>
                                 </li>
                             </ul>
